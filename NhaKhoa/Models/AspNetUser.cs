@@ -66,6 +66,8 @@ namespace NhaKhoa.Models
         [StringLength(13)]
         public string CCCD { get; set; }
 
+        public string FullName { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
 

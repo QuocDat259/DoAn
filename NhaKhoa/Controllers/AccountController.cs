@@ -87,7 +87,30 @@ namespace NhaKhoa.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+
+                    var roles = await UserManager.GetRolesAsync(user.Id);
+
+                    if (roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin", new { area = "Admin" });
+                    }
+                    else if (roles.Contains("NhaSi"))
+                    {
+                        return RedirectToAction("Index", "NhaSi", new { area = "NhaSi" });
+                    }
+                    else if (roles.Contains("NhanVien"))
+                    {
+                        return RedirectToAction("Index", "NhanVien", new { area = "NhanVien" });
+                    }
+                    else if (roles.Contains("BenhNhan"))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                //return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -181,7 +204,7 @@ namespace NhaKhoa.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { 
-                    UserName = model.UserName, Email = model.Email,PhoneNumber =model.PhoneNumber,DiaChi=model.DiaChi,NgheNghiep=model.NgheNghiep,CCCD=model.CCCD,GioiTinh=model.GioiTinh,NgaySinh=model.NgaySinh,NgayTao=model.NgayTao
+                    UserName = model.UserName, Email = model.Email,PhoneNumber =model.PhoneNumber,DiaChi=model.DiaChi,NgheNghiep=model.NgheNghiep,CCCD=model.CCCD,GioiTinh=model.GioiTinh,NgaySinh=model.NgaySinh,NgayTao=model.NgayTao,FullName = model.FullName
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
