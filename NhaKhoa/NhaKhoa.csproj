@@ -59,6 +59,12 @@
       <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.115.5, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
@@ -215,7 +221,7 @@
     <Compile Include="Models\KhungGio.cs" />
     <Compile Include="Models\LichKham.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\NhaKhoa.cs" />
+    <Compile Include="Models\Nhakhoa.cs" />
     <Compile Include="Models\PhieuDatLich.cs" />
     <Compile Include="Models\PhiKham.cs" />
     <Compile Include="Models\Phong.cs" />
@@ -428,6 +434,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -708,6 +715,7 @@
     <Content Include="Areas\NhaSi\assets\vendors\mdi\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="Areas\NhaSi\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff" />
     <Content Include="Areas\NhaSi\assets\vendors\mdi\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Areas\Admin\Views\QLNhanVien\TaoTaiKhoanNV.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

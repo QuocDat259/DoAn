@@ -234,3 +234,7 @@ D:\DACN\NhaKhoa\bin\BotDetect.dll
 D:\DACN\NhaKhoa\bin\BotDetect.Web.Mvc.dll
 D:\DACN\NhaKhoa\bin\System.Data.SQLite.dll
 D:\DACN\NhaKhoa\bin\System.Data.SQLite.xml
+D:\DACN\NhaKhoa\bin\PagedList.dll
+D:\DACN\NhaKhoa\bin\PagedList.Mvc.dll
+D:\DACN\NhaKhoa\bin\PagedList.xml
+D:\DACN\NhaKhoa\bin\PagedList.Mvc.xml
