@@ -1,9 +1,13 @@
 ﻿@model NhaKhoa.Models.RegisterViewModel
 @* sử dụng using và gắn captcha vào form đăng ký  *@
+
 @using BotDetect.Web.Mvc
 <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
-@{ MvcCaptcha registerCaptcha = new MvcCaptcha("registerCaptcha");
+
+@{ 
+    MvcCaptcha registerCaptcha = new MvcCaptcha("registerCaptcha");
 }
+
 @{
     ViewBag.Title = "Đăng kí";
 }

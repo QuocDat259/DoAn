@@ -1,26 +1,16 @@
-﻿
+﻿@model NhaKhoa.Models.RegisterViewModel
+
 @{
-    ViewBag.Title = "TaoTaiKhoanNV";
+    ViewBag.Title = "Create";
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
 }
 
+<h2>Create</h2>
 
-@model NhaKhoa.Models.RegisterViewModel
-@* sử dụng using và gắn captcha vào form đăng ký  *@
-@using BotDetect.Web.Mvc
-<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
-@{ MvcCaptcha registerCaptcha = new MvcCaptcha("registerCaptcha");
-}
-@{
-    ViewBag.Title = "Tạo tài khoản nhân viên";
-}
-
-<h2>@ViewBag.Title</h2>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <hr />
+
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.FullName, "Họ và tên", new { @class = "col-md-2 control-label" })
@@ -101,18 +91,17 @@
             <input class="form-control text-box single-line" id="NgayTao" name="NgayTao" type="datetime-local" value="" readonly />
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.Captcha(registerCaptcha)
-            @Html.TextBox("CaptchaCode")
-        </div>
-    </div>
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Tạo tài khoản" />
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 <script>
     // JavaScript code to set the current date and time in the NgayTao input field
     var currentDate = new Date();
@@ -126,4 +115,3 @@
 
     ngayTaoInput.value = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
 </script>
-
