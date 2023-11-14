@@ -15,7 +15,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
 {
     public class QLNhanVienController : Controller
     {
-        private Nhakhoa db = new Nhakhoa();
+        private NhaKhoaModel db = new NhaKhoaModel();
         private readonly UserManager<ApplicationUser> _userManager;
         public QLNhanVienController()
         {

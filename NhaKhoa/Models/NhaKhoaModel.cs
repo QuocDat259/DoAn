@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace NhaKhoa.Models
 {
-    public partial class Nhakhoa : DbContext
+    public partial class NhaKhoaModel : DbContext
     {
-        public Nhakhoa()
+        public NhaKhoaModel()
             : base("name=NhaKhoa")
         {
         }

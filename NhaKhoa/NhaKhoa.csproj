@@ -221,7 +221,7 @@
     <Compile Include="Models\KhungGio.cs" />
     <Compile Include="Models\LichKham.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Nhakhoa.cs" />
+    <Compile Include="Models\NhaKhoaModel.cs" />
     <Compile Include="Models\PhieuDatLich.cs" />
     <Compile Include="Models\PhiKham.cs" />
     <Compile Include="Models\Phong.cs" />
