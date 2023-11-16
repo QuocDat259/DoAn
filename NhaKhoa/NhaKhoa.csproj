@@ -651,7 +651,6 @@
     <Content Include="Areas\NhaSi\Views\Shared\Layout.cshtml" />
     <Content Include="Areas\NhanVien\Views\Shared\Layout.cshtml" />
     <Content Include="Areas\NhanVien\Views\NhanVien\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\QLBenhNhan\Index.cshtml" />
     <Content Include="Areas\NhaSi\assets\css\style.css.map" />
     <Content Include="Areas\NhaSi\assets\fonts\Ubuntu\Ubuntu-Bold.eot" />
     <Content Include="Areas\NhaSi\assets\fonts\Ubuntu\Ubuntu-Bold.ttf" />
@@ -737,6 +736,11 @@
     <Content Include="Areas\NhaSi\Views\Info\Index.cshtml" />
     <Content Include="Areas\NhaSi\Views\Info\Edit.cshtml" />
     <Content Include="Areas\NhaSi\Views\RateView\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\QLBenhNhan\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\QLBenhNhan\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\QLBenhNhan\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\QLBenhNhan\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\QLBenhNhan\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
