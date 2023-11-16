@@ -10,9 +10,9 @@ namespace NhaKhoa.Models
     public partial class ThoiKhoaBieu
     {
         [Key]
-        public int Id_TKB { get; set; }
+        public string Id_TKB { get; set; }
 
-        public string TenTKB { get; set; }
+        public string Thu { get; set; }
 
         public int? Id_Phong { get; set; }
 
@@ -21,11 +21,12 @@ namespace NhaKhoa.Models
 
         public int? Id_khunggio { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? NgayLamViec { get; set; }
+
+        public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual KhungGio KhungGio { get; set; }
-
-        public virtual PhieuDatLich PhieuDatLich { get; set; }
 
         public virtual Phong Phong { get; set; }
     }

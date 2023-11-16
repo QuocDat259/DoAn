@@ -1,0 +1,64 @@
+﻿@model IEnumerable<NhaKhoa.Models.ThoiKhoaBieu>
+
+@{
+    ViewBag.Title = "TKB";
+    Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+}
+
+<h2>TKB</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Fullname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KhungGio.TenCa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id_Nhasi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phong.TenPhong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Thu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayLamViec)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AspNetUsers.Fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KhungGio.TenCa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id_Nhasi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phong.TenPhong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Thu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayLamViec)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id_TKB }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id_TKB }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id_TKB })
+        </td>
+    </tr>
+}
+
+</table>

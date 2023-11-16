@@ -6,20 +6,20 @@ namespace NhaKhoa.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class AspNetUser
+    public partial class AspNetUsers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AspNetUser()
+        public AspNetUsers()
         {
-            AspNetUserClaims = new HashSet<AspNetUserClaim>();
-            AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            DonThuocs = new HashSet<DonThuoc>();
-            HoaDons = new HashSet<HoaDon>();
-            LichKhams = new HashSet<LichKham>();
-            PhieuDatLiches = new HashSet<PhieuDatLich>();
-            TinTucs = new HashSet<TinTuc>();
-            ThoiKhoaBieux = new HashSet<ThoiKhoaBieu>();
-            AspNetRoles = new HashSet<AspNetRole>();
+            AspNetUserClaims = new HashSet<AspNetUserClaims>();
+            AspNetUserLogins = new HashSet<AspNetUserLogins>();
+            DonThuoc = new HashSet<DonThuoc>();
+            HoaDon = new HashSet<HoaDon>();
+            LichKham = new HashSet<LichKham>();
+            PhieuDatLich = new HashSet<PhieuDatLich>();
+            TinTuc = new HashSet<TinTuc>();
+            ThoiKhoaBieu = new HashSet<ThoiKhoaBieu>();
+            AspNetRoles = new HashSet<AspNetRoles>();
         }
 
         public string Id { get; set; }
@@ -66,33 +66,33 @@ namespace NhaKhoa.Models
         [StringLength(13)]
         public string CCCD { get; set; }
 
-        public string FullName { get; set; }
+        public string Fullname { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual ICollection<AspNetUserLogins> AspNetUserLogins { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DonThuoc> DonThuocs { get; set; }
+        public virtual ICollection<DonThuoc> DonThuoc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LichKham> LichKhams { get; set; }
+        public virtual ICollection<LichKham> LichKham { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuDatLich> PhieuDatLiches { get; set; }
+        public virtual ICollection<PhieuDatLich> PhieuDatLich { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TinTuc> TinTucs { get; set; }
+        public virtual ICollection<TinTuc> TinTuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThoiKhoaBieu> ThoiKhoaBieux { get; set; }
+        public virtual ICollection<ThoiKhoaBieu> ThoiKhoaBieu { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
     }
 }

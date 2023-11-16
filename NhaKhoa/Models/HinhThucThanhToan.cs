@@ -12,8 +12,8 @@ namespace NhaKhoa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HinhThucThanhToan()
         {
-            HoaDons = new HashSet<HoaDon>();
-            PhiKhams = new HashSet<PhiKham>();
+            HoaDon = new HashSet<HoaDon>();
+            PhiKham = new HashSet<PhiKham>();
         }
 
         [Key]
@@ -22,9 +22,9 @@ namespace NhaKhoa.Models
         public string TenHinhThuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual ICollection<HoaDon> HoaDon { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhiKham> PhiKhams { get; set; }
+        public virtual ICollection<PhiKham> PhiKham { get; set; }
     }
 }

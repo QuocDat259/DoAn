@@ -25,7 +25,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             if (user != null)
             {
                 // Lấy thông tin người dùng thành công, bạn có thể sử dụng nó trong view
-                ViewBag.TenNhanVien = user.FullName;
+                ViewBag.TenNhanVien = user.Fullname;
                 ViewBag.UserName = user.UserName;
                 ViewBag.Email = user.Email;
                 return View(user);
@@ -38,7 +38,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             string userId = User.Identity.GetUserId();
             if (userId != null)
             {
-                AspNetUser nhaSi = db.AspNetUsers.Find(userId);
+                AspNetUsers nhaSi = db.AspNetUsers.Find(userId);
                 if (nhaSi != null)
                 {
                     return View(nhaSi);
@@ -49,7 +49,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AspNetUser nhaSi)
+        public ActionResult Edit(AspNetUsers nhaSi)
         {
             if (ModelState.IsValid)
             {

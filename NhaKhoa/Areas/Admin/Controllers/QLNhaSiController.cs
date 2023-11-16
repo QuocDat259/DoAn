@@ -41,7 +41,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -103,7 +103,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -116,7 +116,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,GioiTinh,DiaChi,Trangthai,Ngaysinh,NgheNghiep,NgayTao,Bangcap,CCCD,FullName")] AspNetUser aspNetUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,GioiTinh,DiaChi,Trangthai,Ngaysinh,NgheNghiep,NgayTao,Bangcap,CCCD,FullName")] AspNetUsers aspNetUser)
         {
             if (ModelState.IsValid)
             {
@@ -134,7 +134,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -147,7 +147,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             db.AspNetUsers.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -161,5 +161,60 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+        public ActionResult TKB()
+        {
+            var thoiKhoaBieu = db.ThoiKhoaBieu.ToList();
+
+            if (thoiKhoaBieu == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(thoiKhoaBieu);
+        }
+
+        [HttpPost]
+        public ActionResult AddTKB(string userId, string tenTKB, int? idPhong, int? idKhungGio)
+        {
+            var nhaSi = db.AspNetUsers.Include("ThoiKhoaBieu").FirstOrDefault(u => u.Id == userId);
+
+            if (nhaSi == null)
+            {
+                return HttpNotFound();
+            }
+
+            var newSchedule = new ThoiKhoaBieu
+            {
+                Thu = tenTKB,
+                Id_Phong = idPhong,
+                Id_khunggio = idKhungGio
+            };
+
+            nhaSi.ThoiKhoaBieu.Add(newSchedule);
+            db.SaveChanges();
+
+            return RedirectToAction("TKB", new { id = userId });
+        }
+
+        //[HttpPost]
+        //public ActionResult RemoveTKB(int scheduleId, string userId)
+        //{
+        //    var nhaSi = db.AspNetUsers.Include("ThoiKhoaBieu").FirstOrDefault(u => u.Id == userId);
+
+        //    if (nhaSi == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    var scheduleToRemove = nhaSi.ThoiKhoaBieu.FirstOrDefault(tkb => tkb.Id_TKB == scheduleId);
+
+        //    if (scheduleToRemove != null)
+        //    {
+        //        db.ThoiKhoaBieu.Remove(scheduleToRemove);
+        //        db.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("TKB", new { id = userId });
+        //}
     }
 }

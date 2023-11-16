@@ -77,7 +77,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -135,7 +135,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            AspNetUsers aspNetUser = db.AspNetUsers.Find(id);
             if (aspNetUser == null)
             {
                 return HttpNotFound();
@@ -148,7 +148,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,GioiTinh,DiaChi,Trangthai,Ngaysinh,NgheNghiep,NgayTao,Bangcap,CCCD,FullName")] AspNetUser aspNetUser)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,GioiTinh,DiaChi,Trangthai,Ngaysinh,NgheNghiep,NgayTao,Bangcap,CCCD,FullName")] AspNetUsers aspNetUser)
         {
             if (ModelState.IsValid)
             {

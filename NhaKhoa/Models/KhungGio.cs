@@ -12,7 +12,7 @@ namespace NhaKhoa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KhungGio()
         {
-            ThoiKhoaBieux = new HashSet<ThoiKhoaBieu>();
+            ThoiKhoaBieu = new HashSet<ThoiKhoaBieu>();
         }
 
         [Key]
@@ -25,6 +25,6 @@ namespace NhaKhoa.Models
         public TimeSpan? GioKetThuc { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThoiKhoaBieu> ThoiKhoaBieux { get; set; }
+        public virtual ICollection<ThoiKhoaBieu> ThoiKhoaBieu { get; set; }
     }
 }

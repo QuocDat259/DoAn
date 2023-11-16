@@ -27,11 +27,11 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 // Đã lấy được thông tin người dùng, bạn có thể sử dụng thông tin này
                 var userName = user.UserName;
                 var email = user.Email;
-                ViewBag.TenNhaSi = user.FullName;
+                ViewBag.TenNhaSi = user.Fullname;
                 // Thêm các thông tin khác về nha sĩ
 
                 // Lấy đánh giá dựa trên ID của nha sĩ (Id_Nhasi)
-                var danhGiaBinhLuans = db.DanhGias.Where(d => d.Id_Nhasi == userId).ToList();
+                var danhGiaBinhLuans = db.DanhGia.Where(d => d.Id_Nhasi == userId).ToList();
 
                 return View(danhGiaBinhLuans);
             }

@@ -6,7 +6,7 @@ namespace NhaKhoa.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class AspNetUserClaim
+    public partial class AspNetUserClaims
     {
         public int Id { get; set; }
 
@@ -18,6 +18,6 @@ namespace NhaKhoa.Models
 
         public string ClaimValue { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

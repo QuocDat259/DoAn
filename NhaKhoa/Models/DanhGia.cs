@@ -12,7 +12,7 @@ namespace NhaKhoa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DanhGia()
         {
-            TinTucs = new HashSet<TinTuc>();
+            TinTuc = new HashSet<TinTuc>();
         }
 
         [Key]
@@ -31,6 +31,6 @@ namespace NhaKhoa.Models
         public string Id_Nhasi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TinTuc> TinTucs { get; set; }
+        public virtual ICollection<TinTuc> TinTuc { get; set; }
     }
 }

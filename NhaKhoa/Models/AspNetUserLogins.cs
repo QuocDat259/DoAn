@@ -6,7 +6,7 @@ namespace NhaKhoa.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class AspNetUserLogin
+    public partial class AspNetUserLogins
     {
         [Key]
         [Column(Order = 0)]
@@ -20,6 +20,6 @@ namespace NhaKhoa.Models
         [Column(Order = 2)]
         public string UserId { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }
