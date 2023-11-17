@@ -10,9 +10,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using NhaKhoa.Models;
 using System.Threading.Tasks;
+using System.EnterpriseServices;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QLBenhNhanController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();

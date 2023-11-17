@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QLNhaSiController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();
@@ -163,58 +164,52 @@ namespace NhaKhoa.Areas.Admin.Controllers
         }
         public ActionResult TKB()
         {
-            var thoiKhoaBieu = db.ThoiKhoaBieu.ToList();
-
-            if (thoiKhoaBieu == null)
+            try
             {
-                return HttpNotFound();
-            }
+                var thoiKhoaBieu = db.ThoiKhoaBieu.ToList();
 
-            return View(thoiKhoaBieu);
+                if (thoiKhoaBieu == null || !thoiKhoaBieu.Any())
+                {
+                    // Xử lý khi không có dữ liệu
+                    return View("ErrorView"); // Thay "ErrorView" bằng tên view hiển thị thông báo lỗi
+                }
+
+                return View(thoiKhoaBieu);
+            }
+            catch (Exception)
+            {
+                // Xử lý exception, log và hiển thị thông báo lỗi
+                return View("ErrorView"); // Thay "ErrorView" bằng tên view hiển thị thông báo lỗi
+            }
+        }
+        public ActionResult ThemThoiKhoaBieu()
+        {
+            ViewBag.ListPhong = new SelectList(db.Phong, "Id_Phong", "TenPhong");
+            ViewBag.ListNhaSi = new SelectList(db.AspNetUsers.Where(u => u.AspNetRoles.Any(r => r.Id == "2")), "Id", "FullName");
+            ViewBag.ListKhungGio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa");
+
+            return View();
         }
 
         [HttpPost]
-        public ActionResult AddTKB(string userId, string tenTKB, int? idPhong, int? idKhungGio)
+        [ValidateAntiForgeryToken]
+        public ActionResult ThemThoiKhoaBieu(ThoiKhoaBieu thoiKhoaBieu)
         {
-            var nhaSi = db.AspNetUsers.Include("ThoiKhoaBieu").FirstOrDefault(u => u.Id == userId);
-
-            if (nhaSi == null)
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                // Thêm mới vào cơ sở dữ liệu và chuyển hướng
+                db.ThoiKhoaBieu.Add(thoiKhoaBieu);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
-            var newSchedule = new ThoiKhoaBieu
-            {
-                Thu = tenTKB,
-                Id_Phong = idPhong,
-                Id_khunggio = idKhungGio
-            };
+            // Nếu ModelState không hợp lệ, hiển thị lại view với thông báo lỗi và danh sách dropdown đã chọn
+            ViewBag.ListPhong = new SelectList(db.Phong.Select(p => new { p.Id_Phong, p.TenPhong }), "Id_Phong", "TenPhong");
+            ViewBag.ListNhaSi = new SelectList(db.AspNetUsers.Where(u => u.AspNetRoles.Any(r => r.Id == "Id_of_NhaSi_Role")), "Id", "FullName", thoiKhoaBieu.Id_Nhasi);
+            ViewBag.ListKhungGio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa", thoiKhoaBieu.Id_khunggio);
 
-            nhaSi.ThoiKhoaBieu.Add(newSchedule);
-            db.SaveChanges();
-
-            return RedirectToAction("TKB", new { id = userId });
+            return View(thoiKhoaBieu);
         }
-
-        //[HttpPost]
-        //public ActionResult RemoveTKB(int scheduleId, string userId)
-        //{
-        //    var nhaSi = db.AspNetUsers.Include("ThoiKhoaBieu").FirstOrDefault(u => u.Id == userId);
-
-        //    if (nhaSi == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    var scheduleToRemove = nhaSi.ThoiKhoaBieu.FirstOrDefault(tkb => tkb.Id_TKB == scheduleId);
-
-        //    if (scheduleToRemove != null)
-        //    {
-        //        db.ThoiKhoaBieu.Remove(scheduleToRemove);
-        //        db.SaveChanges();
-        //    }
-
-        //    return RedirectToAction("TKB", new { id = userId });
-        //}
     }
 }

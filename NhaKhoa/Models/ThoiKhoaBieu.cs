@@ -10,7 +10,7 @@ namespace NhaKhoa.Models
     public partial class ThoiKhoaBieu
     {
         [Key]
-        public string Id_TKB { get; set; }
+        public int Id_TKB { get; set; }
 
         public string Thu { get; set; }
 

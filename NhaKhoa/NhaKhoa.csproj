@@ -238,6 +238,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\assetsTKB\css\style.css" />
+    <Content Include="Areas\assetsTKB\js\main.js" />
+    <Content Include="Areas\assetsTKB\js\util.js" />
     <Content Include="Areas\assets\css\nucleo-icons.css" />
     <Content Include="Areas\assets\css\nucleo-svg.css" />
     <Content Include="Areas\assets\css\soft-ui-dashboard.css" />
@@ -742,6 +745,8 @@
     <Content Include="Areas\Admin\Views\QLBenhNhan\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLBenhNhan\Index.cshtml" />
     <Content Include="Areas\Admin\Views\QLNhaSi\TKB.cshtml" />
+    <Content Include="Areas\assetsTKB\css\style.scss" />
+    <Content Include="Areas\Admin\Views\QLNhaSi\ThemThoiKhoaBieu.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
