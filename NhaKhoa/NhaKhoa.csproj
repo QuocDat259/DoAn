@@ -202,6 +202,7 @@
     <Compile Include="Areas\NhanVien\NhanVienAreaRegistration.cs" />
     <Compile Include="Areas\NhaSi\Controllers\InfoController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\NhaSiController.cs" />
+    <Compile Include="Areas\NhaSi\Controllers\QLLichController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\RateViewController.cs" />
     <Compile Include="Areas\NhaSi\NhaSiAreaRegistration.cs" />
     <Compile Include="ChatHub.cs" />
@@ -398,6 +399,9 @@
     <Content Include="Areas\NhaSi\assets\vendors\css\vendor.bundle.base.css" />
     <Content Include="Areas\NhaSi\assets\vendors\js\vendor.bundle.base.js" />
     <Content Include="Areas\NhaSi\assets\vendors\mdi\css\materialdesignicons.min.css" />
+    <Content Include="Areas\NhaSi\asset\css\style.css" />
+    <Content Include="Areas\NhaSi\asset\js\main.js" />
+    <Content Include="Areas\NhaSi\asset\js\util.js" />
     <Content Include="assets\css\animate.css" />
     <Content Include="assets\css\flex-slider.css" />
     <Content Include="assets\css\fontawesome.css" />
@@ -446,6 +450,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\Nhaisiimg\trung.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="assets\images\ai-generated-8223597_640.webp" />
@@ -747,6 +752,9 @@
     <Content Include="Areas\Admin\Views\QLNhaSi\TKB.cshtml" />
     <Content Include="Areas\assetsTKB\css\style.scss" />
     <Content Include="Areas\Admin\Views\QLNhaSi\ThemThoiKhoaBieu.cshtml" />
+    <Content Include="Areas\NhaSi\Views\QLLich\Index.cshtml" />
+    <Content Include="Areas\NhaSi\Views\QLLich\ViewCalendar.cshtml" />
+    <Content Include="Areas\NhaSi\asset\css\style.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

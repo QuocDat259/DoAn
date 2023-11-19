@@ -1,0 +1,39 @@
+﻿using Microsoft.AspNet.Identity;
+using NhaKhoa.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace NhaKhoa.Areas.NhaSi.Controllers
+{
+    public class QLLichController : Controller
+    {
+        private NhaKhoaModel db = new NhaKhoaModel();
+        // GET: NhaSi/QLLich
+        public ActionResult Index()
+        {
+
+            // Get the currently logged-in user's ID
+            string currentUserId = User.Identity.GetUserId();
+            var user = db.AspNetUsers.Find(currentUserId);
+            ViewBag.TenNhaSi = user.Fullname;
+            ViewBag.HinhAnh = user.Fullname;
+            // Retrieve the ThoiKhoaBieu for the logged-in dentist
+            var thoikhoabieus = db.ThoiKhoaBieu
+                                 .Where(tkb => tkb.Id_Nhasi == currentUserId)
+                                 .ToList();
+            return View(thoikhoabieus);
+        }
+        public ActionResult ViewCalendar()
+        {
+            // Get the currently logged-in user's ID
+            string currentUserId = User.Identity.GetUserId();
+            var user = db.AspNetUsers.Find(currentUserId);
+            ViewBag.TenNhaSi = user.Fullname;
+            var thoikhoabieus = db.ThoiKhoaBieu.ToList();
+            return View(thoikhoabieus);
+        }
+    }
+}
