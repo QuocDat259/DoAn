@@ -27,10 +27,13 @@ namespace NhaKhoa.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-
+            // Lấy thông tin người dùng đã đăng nhập
+            var userId = User.Identity.GetUserId();
+            var user = db.AspNetUsers.Find(userId);
+            
             // Lấy danh sách người dùng thuộc vai trò "NhaSi"
             var nhanVienUsers = userManager.Users.Where(u => u.Roles.Any(r => r.RoleId == "2")).ToList();
-
+            ViewBag.HinhAnh = user.HinhAnh;
             return View(nhanVienUsers);
         }
 
