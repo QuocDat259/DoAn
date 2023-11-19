@@ -197,6 +197,9 @@ namespace NhaKhoa.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Lấy giá trị của trường Thu từ trường NgayLamViec
+                thoiKhoaBieu.Thu = LayThuTuNgay(thoiKhoaBieu.NgayLamViec);
+
                 // Thêm mới vào cơ sở dữ liệu và chuyển hướng
                 db.ThoiKhoaBieu.Add(thoiKhoaBieu);
                 db.SaveChanges();
@@ -211,5 +214,18 @@ namespace NhaKhoa.Areas.Admin.Controllers
 
             return View(thoiKhoaBieu);
         }
+        private string LayThuTuNgay(DateTime? ngayLamViec)
+        {
+            if (ngayLamViec.HasValue)
+            {
+                // Lấy thứ từ ngày
+                string[] daysOfWeek = { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
+                return daysOfWeek[(int)ngayLamViec.Value.DayOfWeek];
+            }
+
+            // Trường hợp ngày làm việc là null, bạn có thể xử lý hoặc trả về giá trị mặc định
+            return "Ngày làm việc không xác định";
+        }
+
     }
 }

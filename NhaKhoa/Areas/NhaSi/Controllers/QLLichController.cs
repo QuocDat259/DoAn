@@ -18,8 +18,8 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             // Get the currently logged-in user's ID
             string currentUserId = User.Identity.GetUserId();
             var user = db.AspNetUsers.Find(currentUserId);
-            ViewBag.TenNhaSi = user.Fullname;
-            ViewBag.HinhAnh = user.Fullname;
+            ViewBag.TenNhaSi = user.FullName;
+            ViewBag.HinhAnh = user.HinhAnh;
             // Retrieve the ThoiKhoaBieu for the logged-in dentist
             var thoikhoabieus = db.ThoiKhoaBieu
                                  .Where(tkb => tkb.Id_Nhasi == currentUserId)
@@ -31,7 +31,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             // Get the currently logged-in user's ID
             string currentUserId = User.Identity.GetUserId();
             var user = db.AspNetUsers.Find(currentUserId);
-            ViewBag.TenNhaSi = user.Fullname;
+            ViewBag.TenNhaSi = user.FullName;
             var thoikhoabieus = db.ThoiKhoaBieu.ToList();
             return View(thoikhoabieus);
         }

@@ -66,7 +66,7 @@ namespace NhaKhoa.Models
         [StringLength(13)]
         public string CCCD { get; set; }
 
-        public string Fullname { get; set; }
+        public string FullName { get; set; }
 
         public string HinhAnh { get; set; }
 

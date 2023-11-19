@@ -25,7 +25,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
             if (user != null)
             {
                 // Lấy thông tin người dùng thành công, bạn có thể sử dụng nó trong view
-                ViewBag.TenNhanVien = user.Fullname;
+                ViewBag.TenNhanVien = user.FullName;
                 ViewBag.UserName = user.UserName;
                 ViewBag.Email = user.Email;
                 return View(user);

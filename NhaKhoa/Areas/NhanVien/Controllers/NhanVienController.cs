@@ -23,7 +23,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
                 // Đã lấy được thông tin người dùng, bạn có thể sử dụng thông tin này
                 var userName = user.UserName;
                 var email = user.Email;
-                ViewBag.TenNhanVien = user.Fullname;
+                ViewBag.TenNhanVien = user.FullName;
                 // Thêm các thông tin khác về nha sĩ
             }
             return View();
