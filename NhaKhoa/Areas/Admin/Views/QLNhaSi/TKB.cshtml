@@ -42,10 +42,10 @@
                 <li class="cd-schedule__group">
                     <div class="cd-schedule__top-info"><span>@daySchedule.TenThu</span></div>
                     <ul>
-                        @foreach (var eventItem in daySchedule.ThoiKhoaBieu)
+                        @foreach (var eventItem in daySchedule.ThoiKhoaBieu.OrderBy(e => e.NgayLamViec))
                         {
                             <li class="cd-schedule__event">
-                                <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4" >
+                                <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
                                     <em class="cd-schedule__name"> @eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
                                     <em class="cd-schedule__name"> @eventItem.AspNetUsers.FullName</em>
                                     <em class="cd-schedule__name"> @eventItem.NgayLamViec</em>

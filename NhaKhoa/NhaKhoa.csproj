@@ -196,6 +196,7 @@
     <Compile Include="Areas\Admin\Controllers\QLBenhNhanController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhanVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhaSiController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLTinTucController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\InfoNVController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\QLBenhNhanController.cs" />
@@ -758,6 +759,11 @@
     <Content Include="Areas\NhaSi\Views\QLLich\ViewCalendar.cshtml" />
     <Content Include="Areas\NhaSi\asset\css\style.scss" />
     <Content Include="Areas\Admin\Views\QLNhaSi\TKB.cshtml" />
+    <Content Include="Areas\Admin\Views\QLTinTuc\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\QLTinTuc\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\QLTinTuc\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\QLTinTuc\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\QLTinTuc\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -814,13 +820,17 @@
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
     <Content Include="Views\Home\Service.cshtml" />
-    <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Home\DetailsDoctor.cshtml" />
+    <Content Include="Views\Home\BlogGrid.cshtml" />
+    <Content Include="Views\Home\BlogDetail.cshtml" />
+    <Content Include="Views\Home\Appointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\NhanVien\Data\" />
     <Folder Include="Areas\NhaSi\Data\" />
+    <Folder Include="assets\images\tintuc\" />
     <Folder Include="BangCap\" />
   </ItemGroup>
   <ItemGroup>

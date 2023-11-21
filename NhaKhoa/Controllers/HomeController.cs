@@ -1,43 +1,134 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NhaKhoa.Models;
 using System.Linq;
-using System.Web;
+using System.Net;
 using System.Web.Mvc;
+using PagedList;
+using Microsoft.AspNet.Identity;
 
-namespace NhaKhoa.Controllers
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private NhaKhoaModel db = new NhaKhoaModel();
+    public ActionResult Index()
     {
-        public ActionResult Index()
+        var nhaSiList = db.AspNetUsers
+               .Where(u => u.AspNetRoles.Any(r => r.Name == "NhaSi"))
+               .ToList();
+
+        return View(nhaSiList);
+    }
+    public ActionResult DetailsDoctor(string id)
+    {
+        if (id == null)
         {
-            return View();
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        AspNetUsers dental = db.AspNetUsers
+            .Where(u => u.AspNetRoles.Any(r => r.Name == "NhaSi"))
+            .FirstOrDefault(u => u.Id == id);
 
-            return View();
+        if (dental == null)
+        {
+            return HttpNotFound();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+        return View(dental);
+    }
+    public ActionResult About()
+    {
 
-            return View();
-        }
-        
-        public ActionResult Service()
-        {
-            ViewBag.Message = "Your contact page.";
+        return View();
+    }
 
-            return View();
-        }
-        public ActionResult Chat()
-        {
-            ViewBag.Message = "Your contact page.";
+    public ActionResult Contact()
+    {
 
-            return View();
+
+        return View();
+    }
+
+    public ActionResult Service()
+    {
+
+        return View();
+    }
+    public ActionResult BlogGrid(int? page)
+    {
+        const int pageSize = 3; // Adjust the number of items per page as needed
+
+        // Lấy danh sách các bài viết từ database và sắp xếp theo Id_tintuc
+        var tintucs = db.TinTuc.OrderBy(b => b.Id_tintuc);
+
+        int pageNumber = (page ?? 1); // If page is null, default to page 1
+        var paginatedTinTucs = tintucs.OrderBy(t => t.Id_tintuc).ToPagedList(pageNumber, pageSize);
+
+        return View(paginatedTinTucs);
+    }
+    public ActionResult BlogDetail(int? id)
+    {
+        if (id == null)
+        {
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+        TinTuc tintuc = db.TinTuc.Find(id);
+
+        if (tintuc == null)
+        {
+            return HttpNotFound();
+        }
+
+        return View(tintuc);
+    }
+    [Authorize]
+    public ActionResult Appointment()
+    {
+        // Truy vấn cơ sở dữ liệu để lấy danh sách Id_hinhthuc
+        var hinhThucList = db.HinhThucThanhToan.ToList();
+
+        // Tạo SelectList từ danh sách
+        SelectList hinhThucSelectList = new SelectList(hinhThucList, "Id_hinhthuc", "TenHinhThuc");
+
+        // Đặt SelectList vào ViewBag hoặc mô hình
+        ViewBag.HinhThucList = hinhThucSelectList;
+        var nhaSiList = db.AspNetUsers
+                 .Where(u => u.AspNetRoles.Any(r => r.Name == "NhaSi"))
+                 .Select(u => new { IdNhaSi = u.Id, TenNhaSi = u.FullName })
+                 .ToList();
+        SelectList nhaSiSelectList = new SelectList(nhaSiList, "IdNhaSi", "TenNhaSi");
+        ViewBag.NhaSiList = nhaSiSelectList;
+
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+
+    public ActionResult Appointment([Bind(Include = "Id_Phieudat,NgayKham,Gia,Id_hinhthuc,IdNhaSi,IdBenhNhan,Id_kTKB")] PhieuDatLich DatLich)
+    {
+        if (ModelState.IsValid)
+        {
+            // Gán giá trị cố định 150 cho trường Gia
+            DatLich.Gia = 150;
+            string currentUserId = User.Identity.GetUserId();
+            DatLich.IdBenhNhan = currentUserId;
+            db.PhieuDatLich.Add(DatLich);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+        // Nếu ModelState không hợp lệ, tái sử dụng SelectList cho dropdown
+        var hinhThucList = db.HinhThucThanhToan.ToList();
+        SelectList hinhThucSelectList = new SelectList(hinhThucList, "Id_hinhthuc", "TenHinhThuc");
+        ViewBag.HinhThucList = hinhThucSelectList;
+        // Đặt SelectList vào ViewBag hoặc mô hình
+        ViewBag.HinhThucList = hinhThucSelectList;
+        var nhaSiList = db.AspNetUsers
+                 .Where(u => u.AspNetRoles.Any(r => r.Name == "NhaSi"))
+                 .Select(u => new { IdNhaSi = u.Id, TenNhaSi = u.FullName })
+                 .ToList();
+        SelectList nhaSiSelectList = new SelectList(nhaSiList, "IdNhaSi", "TenNhaSi");
+        ViewBag.NhaSiList = nhaSiSelectList;
+
+
+        return View(DatLich);
     }
 }
