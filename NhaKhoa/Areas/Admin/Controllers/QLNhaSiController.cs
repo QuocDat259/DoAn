@@ -234,7 +234,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             if (ngayLamViec.HasValue)
             {
                 // Lấy thứ từ ngày
-                string[] daysOfWeek = { "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật" };
+                string[] daysOfWeek = { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
                 string tenThu = daysOfWeek[(int)ngayLamViec.Value.DayOfWeek];
 
                 // Lấy Id của TenThu từ bảng Thu

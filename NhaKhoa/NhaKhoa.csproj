@@ -218,6 +218,7 @@
     <Compile Include="Models\AspNetUserLogins.cs" />
     <Compile Include="Models\AspNetUsers.cs" />
     <Compile Include="Models\DanhGia.cs" />
+    <Compile Include="Models\DanhGiaNhaSi.cs" />
     <Compile Include="Models\DichVu.cs" />
     <Compile Include="Models\DonThuoc.cs" />
     <Compile Include="Models\HinhThucThanhToan.cs" />
@@ -225,7 +226,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KhungGio.cs" />
     <Compile Include="Models\LichKham.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\NhaKhoaModel.cs" />
     <Compile Include="Models\PhieuDatLich.cs" />
     <Compile Include="Models\PhiKham.cs" />

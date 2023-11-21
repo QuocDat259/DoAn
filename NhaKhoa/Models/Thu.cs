@@ -16,6 +16,7 @@ namespace NhaKhoa.Models
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int idThu { get; set; }
 
         [StringLength(50)]
