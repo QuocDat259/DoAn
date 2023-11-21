@@ -200,8 +200,12 @@ namespace NhaKhoa.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Lấy giá trị của trường Thu từ trường NgayLamViec
-                thoiKhoaBieu.Thu.TenThu = LayThuTuNgay(thoiKhoaBieu.NgayLamViec);
+                // Lấy giá trị của trường NgayLamViec và IdThu từ đối tượng NgayVaThu
+                NgayVaThu ngayVaThu = LayNgayVaThu(thoiKhoaBieu.NgayLamViec);
+
+                // Gán giá trị của NgayLamViec và IdThu từ đối tượng NgayVaThu
+                thoiKhoaBieu.NgayLamViec = ngayVaThu.NgayLamViec;
+                thoiKhoaBieu.IdThu = ngayVaThu.IdThu; // Use IdThu instead of TenThuId
 
                 // Thêm mới vào cơ sở dữ liệu và chuyển hướng
                 db.ThoiKhoaBieu.Add(thoiKhoaBieu);
@@ -217,17 +221,33 @@ namespace NhaKhoa.Areas.Admin.Controllers
 
             return View(thoiKhoaBieu);
         }
-        private string LayThuTuNgay(DateTime? ngayLamViec)
+
+
+        public class NgayVaThu
+        {
+            public DateTime? NgayLamViec { get; set; }
+            public int IdThu { get; set; }
+        }
+
+        private NgayVaThu LayNgayVaThu(DateTime? ngayLamViec)
         {
             if (ngayLamViec.HasValue)
             {
                 // Lấy thứ từ ngày
-                string[] daysOfWeek = { "Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
-                return daysOfWeek[(int)ngayLamViec.Value.DayOfWeek];
-            }
+                string[] daysOfWeek = { "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật" };
+                string tenThu = daysOfWeek[(int)ngayLamViec.Value.DayOfWeek];
 
-            // Trường hợp ngày làm việc là null, bạn có thể xử lý hoặc trả về giá trị mặc định
-            return "Ngày làm việc không xác định";
+                // Lấy Id của TenThu từ bảng Thu
+                int idThu = db.Thu.Single(t => t.TenThu == tenThu).idThu;
+
+                // Trả về đối tượng chứa ngày và Id của TenThu
+                return new NgayVaThu { NgayLamViec = ngayLamViec, IdThu = idThu };
+            }
+            else
+            {
+                // Trường hợp ngày làm việc là null
+                return new NgayVaThu { NgayLamViec = null, IdThu = -1 }; // Modify this default value based on your actual model
+            }
         }
 
     }
