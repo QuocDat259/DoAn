@@ -209,6 +209,15 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 thoiKhoaBieu.NgayLamViec = ngayVaThu.NgayLamViec;
                 thoiKhoaBieu.IdThu = ngayVaThu.IdThu; // Use IdThu instead of TenThuId
 
+                // Kiểm tra trùng lặp trước khi thêm mới
+                if (KiemTraTrungLich(thoiKhoaBieu))
+                {
+                    // Nếu trùng lịch, thêm lỗi vào ModelState và chuyển hướng quay lại view
+                    ModelState.AddModelError(string.Empty, "Lịch làm việc đã trùng. Vui lòng chọn lịch khác.");
+                    SetupDropdownLists(); // Gọi hàm này để cập nhật lại danh sách dropdown
+                    return View(thoiKhoaBieu);
+                }
+
                 // Thêm mới vào cơ sở dữ liệu và chuyển hướng
                 db.ThoiKhoaBieu.Add(thoiKhoaBieu);
                 db.SaveChanges();
@@ -217,11 +226,26 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
 
             // Nếu ModelState không hợp lệ, hiển thị lại view với thông báo lỗi và danh sách dropdown đã chọn
-            ViewBag.ListPhong = new SelectList(db.Phong.Select(p => new { p.Id_Phong, p.TenPhong }), "Id_Phong", "TenPhong");
-            ViewBag.ListNhaSi = new SelectList(db.AspNetUsers.Where(u => u.AspNetRoles.Any(r => r.Id == "Id_of_NhaSi_Role")), "Id", "FullName", thoiKhoaBieu.Id_Nhasi);
-            ViewBag.ListKhungGio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa", thoiKhoaBieu.Id_khunggio);
-
+            SetupDropdownLists(); // Gọi hàm này để cập nhật lại danh sách dropdown
             return View(thoiKhoaBieu);
+        }
+
+        // Hàm kiểm tra trùng lịch
+        private bool KiemTraTrungLich(ThoiKhoaBieu thoiKhoaBieu)
+        {
+            // Kiểm tra xem lịch làm việc mới có trùng với lịch làm việc đã tồn tại không
+            return db.ThoiKhoaBieu.Any(t => t.Id_Phong == thoiKhoaBieu.Id_Phong &&
+                                            t.Id_Nhasi == thoiKhoaBieu.Id_Nhasi &&
+                                            t.Id_khunggio == thoiKhoaBieu.Id_khunggio &&
+                                            t.NgayLamViec == thoiKhoaBieu.NgayLamViec);
+        }
+
+        // Hàm thiết lập danh sách dropdown
+        private void SetupDropdownLists()
+        {
+            ViewBag.ListPhong = new SelectList(db.Phong.Select(p => new { p.Id_Phong, p.TenPhong }), "Id_Phong", "TenPhong");
+            ViewBag.ListNhaSi = new SelectList(db.AspNetUsers.Where(u => u.AspNetRoles.Any(r => r.Id == "2")), "Id", "FullName");
+            ViewBag.ListKhungGio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa");
         }
 
 
