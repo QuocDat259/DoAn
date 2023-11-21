@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using NhaKhoa.Models;
 using System.Threading.Tasks;
+using System.Text;
+
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
