@@ -169,7 +169,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
         {
             try
             {
-                var thoiKhoaBieu = db.ThoiKhoaBieu.ToList();
+                var thoiKhoaBieu = db.Thu.ToList();
 
                 if (thoiKhoaBieu == null || !thoiKhoaBieu.Any())
                 {
@@ -201,7 +201,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 // Lấy giá trị của trường Thu từ trường NgayLamViec
-                thoiKhoaBieu.Thu = LayThuTuNgay(thoiKhoaBieu.NgayLamViec);
+                thoiKhoaBieu.Thu.TenThu = LayThuTuNgay(thoiKhoaBieu.NgayLamViec);
 
                 // Thêm mới vào cơ sở dữ liệu và chuyển hướng
                 db.ThoiKhoaBieu.Add(thoiKhoaBieu);

@@ -231,6 +231,7 @@
     <Compile Include="Models\PhiKham.cs" />
     <Compile Include="Models\Phong.cs" />
     <Compile Include="Models\ThoiKhoaBieu.cs" />
+    <Compile Include="Models\Thu.cs" />
     <Compile Include="Models\Thuoc.cs" />
     <Compile Include="Models\TinTuc.cs" />
     <Compile Include="Models\VatTu.cs" />
@@ -750,12 +751,12 @@
     <Content Include="Areas\Admin\Views\QLBenhNhan\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QLBenhNhan\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLBenhNhan\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\QLNhaSi\TKB.cshtml" />
     <Content Include="Areas\assetsTKB\css\style.scss" />
     <Content Include="Areas\Admin\Views\QLNhaSi\ThemThoiKhoaBieu.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLich\Index.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLich\ViewCalendar.cshtml" />
     <Content Include="Areas\NhaSi\asset\css\style.scss" />
+    <Content Include="Areas\Admin\Views\QLNhaSi\TKB.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

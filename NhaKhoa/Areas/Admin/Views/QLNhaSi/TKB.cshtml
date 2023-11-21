@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NhaKhoa.Models.ThoiKhoaBieu>
+﻿@model List<NhaKhoa.Models.Thu>
 
 @{
     ViewBag.Title = "TKB";
@@ -37,18 +37,18 @@
 
     <div class="cd-schedule__events">
         <ul>
-            @foreach (var dayGroup in Model.GroupBy(item => item.Thu))
+            @foreach (var daySchedule in Model)
             {
                 <li class="cd-schedule__group">
-                    <div class="cd-schedule__top-info"><span>@dayGroup.Key</span></div>
+                    <div class="cd-schedule__top-info"><span>@daySchedule.TenThu</span></div>
                     <ul>
-                        @foreach (var item in dayGroup.OrderBy(e => e.KhungGio.GioBatDau))
+                        @foreach (var eventItem in daySchedule.ThoiKhoaBieu)
                         {
                             <li class="cd-schedule__event">
-                                <a data-start="@item.KhungGio.GioBatDau" data-end="@item.KhungGio.GioKetThuc" data-event="event-4" href="#">
-                                    <em class="cd-schedule__name"> @item.Phong.TenPhong-@item.KhungGio.TenCa</em>
-                                    <em class="cd-schedule__name"> @item.AspNetUsers.FullName</em>
-                                    <em class="cd-schedule__name"> @item.NgayLamViec</em>
+                                <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4" >
+                                    <em class="cd-schedule__name"> @eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
+                                    <em class="cd-schedule__name"> @eventItem.AspNetUsers.FullName</em>
+                                    <em class="cd-schedule__name"> @eventItem.NgayLamViec</em>
                                 </a>
                             </li>
                         }

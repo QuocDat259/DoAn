@@ -38,6 +38,8 @@ namespace NhaKhoa.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LichKham> LichKham { get; set; }
 
+        public virtual ThoiKhoaBieu ThoiKhoaBieu { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhiKham> PhiKham { get; set; }
     }
