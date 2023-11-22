@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity;
 using NhaKhoa.Models;
 using System.Threading.Tasks;
 using System.Text;
+using PagedList;
+using PagedList.Mvc;
 
 
 namespace NhaKhoa.Areas.Admin.Controllers
@@ -167,24 +169,29 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB()
+        public ActionResult TKB(int? page)
         {
             try
             {
                 var thoiKhoaBieu = db.Thu.ToList();
 
-                if (thoiKhoaBieu == null || !thoiKhoaBieu.Any())
+                if (!thoiKhoaBieu.Any())
                 {
-                    // Xử lý khi không có dữ liệu
-                    return View("ErrorView"); // Thay "ErrorView" bằng tên view hiển thị thông báo lỗi
+                    ViewBag.ErrorMessage = "Không có dữ liệu để hiển thị.";
+                    return View(thoiKhoaBieu.ToPagedList(1, 7)); // Mặc định hiển thị trang 1, mỗi trang 10 phần tử
                 }
 
-                return View(thoiKhoaBieu);
+                int pageSize = 7; // Số lượng mục hiển thị trên mỗi trang
+                int pageNumber = (page ?? 1);
+
+                return View(thoiKhoaBieu.ToPagedList(pageNumber, pageSize));
             }
             catch (Exception)
             {
-                // Xử lý exception, log và hiển thị thông báo lỗi
-                return View("ErrorView"); // Thay "ErrorView" bằng tên view hiển thị thông báo lỗi
+                // Log exception
+                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.";
+
+                return View("ErrorView");
             }
         }
         public ActionResult ThemThoiKhoaBieu()
