@@ -169,31 +169,29 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(int? page)
+        public ActionResult TKB()
         {
             try
             {
-                var thoiKhoaBieu = db.Thu.ToList();
+                var danhSachThu = db.Thu.ToList();
+                var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.ToList();
 
-                if (!thoiKhoaBieu.Any())
+                var viewModel = new ThoiKhoaBieuViewModel
                 {
-                    ViewBag.ErrorMessage = "Không có dữ liệu để hiển thị.";
-                    return View(thoiKhoaBieu.ToPagedList(1, 7)); // Mặc định hiển thị trang 1, mỗi trang 10 phần tử
-                }
+                    DanhSachThu = danhSachThu,
+                    DanhSachThoiKhoaBieu = danhSachThoiKhoaBieu
+                };
 
-                int pageSize = 7; // Số lượng mục hiển thị trên mỗi trang
-                int pageNumber = (page ?? 1);
-
-                return View(thoiKhoaBieu.ToPagedList(pageNumber, pageSize));
+                return View(viewModel);
             }
             catch (Exception)
             {
                 // Log exception
                 ViewBag.ErrorMessage = "Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.";
-
                 return View("ErrorView");
             }
         }
+
         public ActionResult ThemThoiKhoaBieu()
         {
             ViewBag.ListPhong = new SelectList(db.Phong, "Id_Phong", "TenPhong");
