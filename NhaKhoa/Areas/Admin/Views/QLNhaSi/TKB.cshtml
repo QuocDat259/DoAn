@@ -1,4 +1,5 @@
-﻿
+﻿@using PagedList.Mvc
+@using PagedList
 @model NhaKhoa.Models.ThoiKhoaBieuViewModel
 
 @{
@@ -12,81 +13,92 @@
 </header>
 
 <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
-    <div class="cd-schedule__timeline">
-        <ul>
-            <li><span>09:00</span></li>
-            <li><span>09:30</span></li>
-            <li><span>10:00</span></li>
-            <li><span>10:30</span></li>
-            <li><span>11:00</span></li>
-            <li><span>11:30</span></li>
-            <li><span>12:00</span></li>
-            <li><span>12:30</span></li>
-            <li><span>13:00</span></li>
-            <li><span>13:30</span></li>
-            <li><span>14:00</span></li>
-            <li><span>14:30</span></li>
-            <li><span>15:00</span></li>
-            <li><span>15:30</span></li>
-            <li><span>16:00</span></li>
-            <li><span>16:30</span></li>
-            <li><span>17:00</span></li>
-            <li><span>17:30</span></li>
-            <li><span>18:00</span></li>
-        </ul>
-    </div> <!-- .cd-schedule__timeline -->
+    @if (Model.DanhSachThu.Any())
+    {
+        <div class="cd-schedule__timeline">
+            <ul>
+                <li><span>09:00</span></li>
+                <li><span>09:30</span></li>
+                <li><span>10:00</span></li>
+                <li><span>10:30</span></li>
+                <li><span>11:00</span></li>
+                <li><span>11:30</span></li>
+                <li><span>12:00</span></li>
+                <li><span>12:30</span></li>
+                <li><span>13:00</span></li>
+                <li><span>13:30</span></li>
+                <li><span>14:00</span></li>
+                <li><span>14:30</span></li>
+                <li><span>15:00</span></li>
+                <li><span>15:30</span></li>
+                <li><span>16:00</span></li>
+                <li><span>16:30</span></li>
+                <li><span>17:00</span></li>
+                <li><span>17:30</span></li>
+                <li><span>18:00</span></li>
+            </ul>
+        </div> <!-- .cd-schedule__timeline -->
 
-    <div class="cd-schedule__events">
-        <ul>
-            @foreach (var daySchedule in Model.DanhSachThu)
-            {
-                <li class="cd-schedule__group">
-                    <div class="cd-schedule__top-info"><span>@daySchedule.TenThu</span></div>
-                    <ul>
-                        @foreach (var eventItem in daySchedule.ThoiKhoaBieu.OrderBy(e => e.NgayLamViec))
-                        {
-                            <li class="cd-schedule__event">
-                                <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
-                                    <!-- Sử dụng các thuộc tính mới từ Thu và ThoiKhoaBieu -->
-                                    <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
-                                    <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
-                                    @if (eventItem.NgayLamViec.HasValue)
-                                    {
-                                        <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.Date.ToString("yyyy-MM-dd")</em>
-                                    }
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            }
-        </ul>
-    </div>
-
-    <div class="cd-schedule-modal">
-        <header class="cd-schedule-modal__header">
-            <div class="cd-schedule-modal__content">
-                <span class="cd-schedule-modal__date"></span>
-                <h3 class="cd-schedule-modal__name"></h3>
-            </div>
-
-            <div class="cd-schedule-modal__header-bg"></div>
-        </header>
-
-        <div class="cd-schedule-modal__body">
-            <div class="cd-schedule-modal__event-info">
-                <h1> hehee</h1>
-            </div>
-            <div class="cd-schedule-modal__body-bg"></div>
+        <div class="cd-schedule__events">
+            <ul>
+                @foreach (var daySchedule in Model.DanhSachThu)
+                {
+                    <li class="cd-schedule__group">
+                        <div class="cd-schedule__top-info"><span>@daySchedule.TenThu</span></div>
+                        <ul>
+                            @foreach (var eventItem in daySchedule.ThoiKhoaBieu.OrderBy(e => e.NgayLamViec))
+                            {
+                                <li class="cd-schedule__event">
+                                    <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
+                                        <!-- Sử dụng các thuộc tính mới từ Thu và ThoiKhoaBieu -->
+                                        <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
+                                        <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
+                                        @if (eventItem.NgayLamViec.HasValue)
+                                        {
+                                            <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.Date.ToString("yyyy-MM-dd")</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
         </div>
 
-        <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
-    </div>
+        <div class="cd-schedule-modal">
+            <header class="cd-schedule-modal__header">
+                <div class="cd-schedule-modal__content">
+                    <span class="cd-schedule-modal__date"></span>
+                    <h3 class="cd-schedule-modal__name"></h3>
+                </div>
 
-    <div class="cd-schedule__cover-layer"></div>
+                <div class="cd-schedule-modal__header-bg"></div>
+            </header>
+
+            <div class="cd-schedule-modal__body">
+                <div class="cd-schedule-modal__event-info">
+                    <h1> hehee</h1>
+                </div>
+                <div class="cd-schedule-modal__body-bg"></div>
+            </div>
+
+            <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
+        </div>
+        <div class="cd-schedule__cover-layer"></div>
+    }
+    else
+    {
+        <p>Không có dữ liệu thời khóa biểu.</p>
+    }
+
 </div> <!-- .cd-schedule -->
-@*<div class="pager-container">
-        @Html.PagedListPager(Model, page => Url.Action("TKB", new { page }))
-    </div>*@
+@if (Model.DanhSachThoiKhoaBieu.PageCount > 1)
+{
+    <div class="pager-container">
+        @Html.PagedListPager(Model.DanhSachThoiKhoaBieu, page => Url.Action("TKB", new { page }))
+    </div>
+}
+
 <script src="~/Areas/assetsTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
 <script src="~/Areas/assetsTKB/js/main.js"></script>

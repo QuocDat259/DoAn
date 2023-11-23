@@ -169,25 +169,44 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB()
+        public ActionResult TKB(int? page)
         {
             try
             {
                 var danhSachThu = db.Thu.ToList();
                 var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.ToList();
 
-                var viewModel = new ThoiKhoaBieuViewModel
+                // Kiểm tra xem có dữ liệu trong danh sách thu và thời khóa biểu hay không
+                if (danhSachThu.Any() || danhSachThoiKhoaBieu.Any())
                 {
-                    DanhSachThu = danhSachThu,
-                    DanhSachThoiKhoaBieu = danhSachThoiKhoaBieu
-                };
+                    int pageSize = 7; // Số lượng mục trong mỗi trang
+                    int pageNumber = (page ?? 1); // Trang mặc định là 1 nếu không có trang được chọn
 
-                return View(viewModel);
+                    // Sắp xếp danh sách thời khóa biểu theo IdThu và NgayLamViec để đảm bảo thứ tự đúng
+                    var sortedThoiKhoaBieu = danhSachThoiKhoaBieu.OrderBy(e => e.IdThu).ThenBy(e => e.NgayLamViec);
+
+                    // Lấy danh sách thời khóa biểu cho trang hiện tại
+                    var pagedThoiKhoaBieu = sortedThoiKhoaBieu.ToPagedList(pageNumber, pageSize);
+
+                    // Tạo ViewModel
+                    var viewModel = new ThoiKhoaBieuViewModel
+                    {
+                        DanhSachThu = danhSachThu,
+                        DanhSachThoiKhoaBieu = pagedThoiKhoaBieu
+                    };
+
+                    return View(viewModel);
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Không có dữ liệu để hiển thị.";
+                    return View("ErrorView");
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // Log exception
-                ViewBag.ErrorMessage = "Đã xảy ra lỗi khi lấy dữ liệu. Vui lòng thử lại sau.";
+                ViewBag.ErrorMessage = $"Đã xảy ra lỗi khi lấy dữ liệu: {ex.Message}";
                 return View("ErrorView");
             }
         }
