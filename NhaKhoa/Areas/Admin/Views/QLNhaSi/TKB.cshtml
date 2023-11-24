@@ -5,12 +5,37 @@
 @{
     ViewBag.Title = "TKB";
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
+    var now = DateTime.Now;
+
+    // Tính số ngày chênh lệch giữa ngày hiện tại và Thứ Hai của tuần hiện tại
+    var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+
+    // Lấy ngày bắt đầu của tuần (Thứ Hai)
+    var monday = now.AddDays(-daysUntilMonday);
+
+    // Lấy ngày kết thúc của tuần (Chủ Nhật)
+    var sunday = monday.AddDays(6);
+    int a = 0;
+    int numberweek = 0;
+    string temp = "";
 }
 
 <header class="cd-main-header text-center flex flex-column flex-center">
     <h1 class="text-xl">THỜI GIAN BIỂU</h1>
     <a class="btn--primary" href="@Url.Action("ThemThoiKhoaBieu","QLNhaSi","Admin")">Thêm lịch làm việc</a>
 </header>
+
+<label for="weekSelect">Chọn Tuần:</label>
+<select id="weekSelect" onchange="location.href=this.value;">
+    @foreach (var week in Model.weeks)
+    {
+        numberweek++;
+        <option value="@Url.Action("TKB", new { page = 1, selectedWeek = week.ToString("yyyy-MM-dd") })"
+                @(week == Model.SelectedWeek ? "selected" : "")>
+            Tuần @numberweek: @week.ToString("dd/MM/yyyy") - @week.AddDays(6).ToString("dd/MM/yyyy")
+        </option>
+    }
+</select>
 
 <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
     @if (Model.DanhSachThu.Any())
@@ -48,17 +73,30 @@
                         <ul>
                             @foreach (var eventItem in daySchedule.ThoiKhoaBieu.OrderBy(e => e.NgayLamViec))
                             {
-                                <li class="cd-schedule__event">
-                                    <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
-                                        <!-- Sử dụng các thuộc tính mới từ Thu và ThoiKhoaBieu -->
-                                        <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
-                                        <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
-                                        @if (eventItem.NgayLamViec.HasValue)
-                                        {
-                                            <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.Date.ToString("yyyy-MM-dd")</em>
-                                        }
-                                    </a>
-                                </li>
+                                if (eventItem.NgayLamViec.HasValue)
+                                {
+                                    temp = @eventItem.NgayLamViec.Value.Date.ToString("dd/MM/yyyy");
+                                    now = Convert.ToDateTime(temp);
+                                    a = now.Day - monday.Day;
+                                }
+                                else
+                                {
+                                    a = 0;
+                                }
+                                if (a == daySchedule.idThu)
+                                {
+                                    <li class="cd-schedule__event">
+                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
+                                            <!-- Sử dụng các thuộc tính mới từ Thu và ThoiKhoaBieu -->
+                                            <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
+                                            <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
+                                            @if (eventItem.NgayLamViec.HasValue)
+                                            {
+                                                <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.Date.ToString("yyyy-MM-dd")</em>
+                                            }
+                                        </a>
+                                    </li>
+                                }
                             }
                         </ul>
                     </li>
@@ -95,10 +133,23 @@
 </div> <!-- .cd-schedule -->
 @if (Model.DanhSachThoiKhoaBieu.PageCount > 1)
 {
+    <!-- Hiển thị phân trang nếu có nhiều trang -->
     <div class="pager-container">
-        @Html.PagedListPager(Model.DanhSachThoiKhoaBieu, page => Url.Action("TKB", new { page }))
+        @Html.PagedListPager(Model.DanhSachThoiKhoaBieu, page => Url.Action("TKB", new { page, selectedWeek = Model.SelectedWeek }))
     </div>
 }
 
 <script src="~/Areas/assetsTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
 <script src="~/Areas/assetsTKB/js/main.js"></script>
+<script>
+    // ...
+
+    $(document).ready(function () {
+        $('#weekSelect').change(function () {
+            var selectedWeek = $(this).val();
+            location.href = selectedWeek;
+        });
+    });
+
+    // ...
+</script>

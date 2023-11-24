@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Text;
 using PagedList;
 using PagedList.Mvc;
-
+using System.Globalization;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
@@ -21,6 +21,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
     public class QLNhaSiController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();
+        private DateTime monday;
         private readonly UserManager<ApplicationUser> _userManager;
         public QLNhaSiController()
         {
@@ -169,36 +170,60 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(int? page)
+        public ActionResult TKB(int? page, DateTime? selectedWeek)
         {
             try
             {
+                // Lấy danh sách các ngày trong tuần và lịch làm việc từ cơ sở dữ liệu
                 var danhSachThu = db.Thu.ToList();
                 var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.ToList();
 
-                // Kiểm tra xem có dữ liệu trong danh sách thu và thời khóa biểu hay không
+                // Kiểm tra xem có dữ liệu để hiển thị không
                 if (danhSachThu.Any() || danhSachThoiKhoaBieu.Any())
                 {
-                    int pageSize = 7; // Số lượng mục trong mỗi trang
-                    int pageNumber = (page ?? 1); // Trang mặc định là 1 nếu không có trang được chọn
+                    // Số lượng mục trong mỗi trang
+                    int pageSize = 7;
+                    // Trang mặc định là 1 nếu không có trang được chọn
+                    int pageNumber = (page ?? 1);
 
-                    // Sắp xếp danh sách thời khóa biểu theo IdThu và NgayLamViec để đảm bảo thứ tự đúng
+                    // Sắp xếp lịch làm việc theo thứ và ngày làm việc
                     var sortedThoiKhoaBieu = danhSachThoiKhoaBieu.OrderBy(e => e.IdThu).ThenBy(e => e.NgayLamViec);
-
-                    // Lấy danh sách thời khóa biểu cho trang hiện tại
+                    // Phân trang lịch làm việc
                     var pagedThoiKhoaBieu = sortedThoiKhoaBieu.ToPagedList(pageNumber, pageSize);
+
+                    // Lấy ngày hiện tại
+                    int nam = DateTime.Now.Year;
+                    DateTime start = Convert.ToDateTime("01/01/" + nam.ToString());
+
+                    // Lấy calendar hiện tại (GregorianCalendar)
+                    GregorianCalendar calendar = new GregorianCalendar();
+
+                    // Tạo mảng chứa các tuần
+                    DateTime[] weeks = GetWeeksInYear(start.Year, calendar);
+
+                    // Cập nhật tuần đã chọn nếu có, ngược lại sử dụng tuần mặc định hiện tại
+                    DateTime selectedMonday;
+                    if (selectedWeek.HasValue && DateTime.TryParse(selectedWeek.Value.ToString(), out selectedMonday))
+                    {
+                        // Nếu có tuần đã chọn, sử dụng ngày Thứ Hai của tuần đó
+                        monday = selectedMonday;
+                    }
 
                     // Tạo ViewModel
                     var viewModel = new ThoiKhoaBieuViewModel
                     {
                         DanhSachThu = danhSachThu,
-                        DanhSachThoiKhoaBieu = pagedThoiKhoaBieu
+                        DanhSachThoiKhoaBieu = pagedThoiKhoaBieu,
+                        weeks = weeks,
+                        SelectedWeek = monday
                     };
 
+                    // Trả về view với ViewModel
                     return View(viewModel);
                 }
                 else
                 {
+                    // Nếu không có dữ liệu, hiển thị thông báo lỗi
                     ViewBag.ErrorMessage = "Không có dữ liệu để hiển thị.";
                     return View("ErrorView");
                 }
@@ -210,7 +235,31 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 return View("ErrorView");
             }
         }
+        static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
+        {
+            DateTime[] weeks = new DateTime[calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)];
 
+            // Ngày đầu tiên của năm
+            DateTime startDate = new DateTime(year, 1, 1);
+
+            // Đếm số ngày đã được thêm vào mảng
+            int daysAdded = 0;
+
+            // Duyệt qua từng ngày trong năm
+            for (int i = 0; i < 365; i++)
+            {
+                DateTime currentDate = startDate.AddDays(i);
+
+                // Nếu là ngày đầu tiên của một tuần, thêm vào mảng
+                if (currentDate.DayOfWeek == DayOfWeek.Monday)
+                {
+                    weeks[calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) - 1] = currentDate;
+                    daysAdded++;
+                }
+            }
+
+            return weeks;
+        }
         public ActionResult ThemThoiKhoaBieu()
         {
             ViewBag.ListPhong = new SelectList(db.Phong, "Id_Phong", "TenPhong");

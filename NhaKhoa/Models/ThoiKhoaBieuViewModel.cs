@@ -10,5 +10,8 @@ namespace NhaKhoa.Models
     {
         public List<Thu> DanhSachThu { get; set; }
         public IPagedList<ThoiKhoaBieu> DanhSachThoiKhoaBieu { get; set; }
+        public DateTime[] weeks { get; set; }
+        public DateTime SelectedWeek { get; set; }
+
     }
 }
