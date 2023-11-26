@@ -13,5 +13,7 @@ namespace NhaKhoa.Models
         public DateTime[] weeks { get; set; }
         public DateTime SelectedWeek { get; set; }
 
+        public List<ThoiKhoaBieu> WorkSchedules { get; set; }
+
     }
 }
