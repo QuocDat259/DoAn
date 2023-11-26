@@ -3798,7 +3798,7 @@ a {
     }
 
     .js .cd-schedule--loading .cd-schedule__event {
-        opacity: 0
+        opacity: 1
     }
 }
 

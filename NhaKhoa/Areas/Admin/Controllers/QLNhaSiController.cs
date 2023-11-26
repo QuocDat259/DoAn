@@ -228,10 +228,6 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
         }
 
-
-
-
-
         static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
         {
             DateTime[] weeks = new DateTime[calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)];
