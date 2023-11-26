@@ -87,7 +87,6 @@
                                 {
                                     <li class="cd-schedule__event">
                                         <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
-                                            <!-- Sử dụng các thuộc tính mới từ Thu và ThoiKhoaBieu -->
                                             <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
                                             <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
                                             @if (eventItem.NgayLamViec.HasValue)
@@ -131,6 +130,7 @@
     }
 
 </div> <!-- .cd-schedule -->
+
 @if (Model.DanhSachThoiKhoaBieu.PageCount > 1)
 {
     <!-- Hiển thị phân trang nếu có nhiều trang -->
@@ -141,15 +141,18 @@
 
 <script src="~/Areas/assetsTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
 <script src="~/Areas/assetsTKB/js/main.js"></script>
-<script>
-    // ...
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<script>
     $(document).ready(function () {
+        // Bạn không cần sự kiện onchange trực tiếp trong thẻ select
+        // Sử dụng jQuery để bắt sự kiện onchange
         $('#weekSelect').change(function () {
             var selectedWeek = $(this).val();
-            location.href = selectedWeek;
+
+            // Tạo URL dựa trên tuần đã chọn và chuyển hướng
+            window.location.href = "@Url.Action("TKB")" + "?page=1&selectedWeek=" + selectedWeek;
         });
     });
-
-    // ...
 </script>
+

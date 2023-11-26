@@ -21,7 +21,6 @@ namespace NhaKhoa.Areas.Admin.Controllers
     public class QLNhaSiController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();
-        private DateTime monday;
         private readonly UserManager<ApplicationUser> _userManager;
         public QLNhaSiController()
         {
@@ -186,10 +185,12 @@ namespace NhaKhoa.Areas.Admin.Controllers
                     // Trang mặc định là 1 nếu không có trang được chọn
                     int pageNumber = (page ?? 1);
 
-                    // Sắp xếp lịch làm việc theo thứ và ngày làm việc
-                    var sortedThoiKhoaBieu = danhSachThoiKhoaBieu.OrderBy(e => e.IdThu).ThenBy(e => e.NgayLamViec);
-                    // Phân trang lịch làm việc
-                    var pagedThoiKhoaBieu = sortedThoiKhoaBieu.ToPagedList(pageNumber, pageSize);
+                    // Nếu có tuần đã chọn, lọc danh sách thời khóa biểu cho tuần đó
+                    var filteredThoiKhoaBieu = danhSachThoiKhoaBieu
+                        .Where(tkb => !selectedWeek.HasValue || (tkb.NgayLamViec >= selectedWeek && tkb.NgayLamViec < selectedWeek.Value.AddDays(7)))
+                        .OrderBy(e => e.IdThu)
+                        .ThenBy(e => e.NgayLamViec)
+                        .ToPagedList(pageNumber, pageSize);
 
                     // Lấy ngày hiện tại
                     int nam = DateTime.Now.Year;
@@ -202,20 +203,15 @@ namespace NhaKhoa.Areas.Admin.Controllers
                     DateTime[] weeks = GetWeeksInYear(start.Year, calendar);
 
                     // Cập nhật tuần đã chọn nếu có, ngược lại sử dụng tuần mặc định hiện tại
-                    DateTime selectedMonday;
-                    if (selectedWeek.HasValue && DateTime.TryParse(selectedWeek.Value.ToString(), out selectedMonday))
-                    {
-                        // Nếu có tuần đã chọn, sử dụng ngày Thứ Hai của tuần đó
-                        monday = selectedMonday;
-                    }
+                    DateTime selectedMonday = selectedWeek ?? DateTime.Now.Date;
 
                     // Tạo ViewModel
                     var viewModel = new ThoiKhoaBieuViewModel
                     {
                         DanhSachThu = danhSachThu,
-                        DanhSachThoiKhoaBieu = pagedThoiKhoaBieu,
+                        DanhSachThoiKhoaBieu = filteredThoiKhoaBieu,
                         weeks = weeks,
-                        SelectedWeek = monday
+                        SelectedWeek = selectedMonday
                     };
 
                     // Trả về view với ViewModel
@@ -235,6 +231,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 return View("ErrorView");
             }
         }
+
         static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
         {
             DateTime[] weeks = new DateTime[calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)];
