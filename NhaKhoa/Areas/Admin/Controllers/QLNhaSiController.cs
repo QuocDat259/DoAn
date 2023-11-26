@@ -169,7 +169,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(int? page, DateTime? selectedWeek)
+        public ActionResult TKB(DateTime? selectedWeek)
         {
             try
             {
@@ -180,20 +180,14 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 // Kiểm tra xem có dữ liệu để hiển thị không
                 if (danhSachThu.Any() && danhSachThoiKhoaBieu.Any())
                 {
-                    // Số lượng mục trong mỗi trang
-                    int pageSize = 7;
-                    // Trang mặc định là 1 nếu không có trang được chọn
-                    int pageNumber = (page ?? 1);
-
                     DateTime startOfWeek = selectedWeek ?? DateTime.Now;
-                    var endOfWeek = startOfWeek.AddDays(6);
 
                     // Nếu có tuần đã chọn, lọc danh sách thời khóa biểu cho tuần đó
                     var filteredThoiKhoaBieu = danhSachThoiKhoaBieu
                         .Where(tkb => tkb.NgayLamViec.HasValue && tkb.NgayLamViec.Value.Date == startOfWeek.Date)
                         .OrderBy(e => e.IdThu)
                         .ThenBy(e => e.NgayLamViec)
-                        .ToPagedList(pageNumber, pageSize);
+                        .ToList();
 
                     // Lấy calendar hiện tại (GregorianCalendar)
                     GregorianCalendar calendar = new GregorianCalendar();
@@ -227,6 +221,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 return View("ErrorView");
             }
         }
+
 
         static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
         {

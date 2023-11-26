@@ -1,5 +1,5 @@
-﻿@using PagedList.Mvc
-@using PagedList
+﻿@*@using PagedList.Mvc
+@using PagedList*@
 @model NhaKhoa.Models.ThoiKhoaBieuViewModel
 
 @{
@@ -83,7 +83,7 @@
                                             <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
                                             @if (eventItem.NgayLamViec.HasValue)
                                             {
-                                                <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.ToString("dddd, dd MMMM yyyy HH:mm:ss")</em>
+                                                <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.ToString("yyyy-MM-dd")</em>
                                             }
                                         </a>
                                     </li>
