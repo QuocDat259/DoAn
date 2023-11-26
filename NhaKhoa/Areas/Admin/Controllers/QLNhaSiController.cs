@@ -263,6 +263,12 @@ namespace NhaKhoa.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (thoiKhoaBieu.NgayLamViec < DateTime.Now.Date)
+                {
+                    ModelState.AddModelError(string.Empty, "Lịch làm việc đã quá ngày, Vui lòng chọn lịch khác");
+                    SetupDropdownLists();
+                    return View(thoiKhoaBieu);
+                }
                 // Lấy giá trị của trường NgayLamViec và IdThu từ đối tượng NgayVaThu
                 NgayVaThu ngayVaThu = LayNgayVaThu(thoiKhoaBieu.NgayLamViec);
 
