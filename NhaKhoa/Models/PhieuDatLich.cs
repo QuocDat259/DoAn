@@ -9,13 +9,6 @@ namespace NhaKhoa.Models
     [Table("PhieuDatLich")]
     public partial class PhieuDatLich
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PhieuDatLich()
-        {
-            LichKham = new HashSet<LichKham>();
-            PhiKham = new HashSet<PhiKham>();
-        }
-
         [Key]
         public int Id_Phieudat { get; set; }
 
@@ -33,14 +26,16 @@ namespace NhaKhoa.Models
 
         public int? Id_kTKB { get; set; }
 
+        public int? STT { get; set; }
+
+        public bool? TrangThai { get; set; }
+
+        public bool? TrangThaiThanhToan { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LichKham> LichKham { get; set; }
+        public virtual HinhThucThanhToan HinhThucThanhToan { get; set; }
 
         public virtual ThoiKhoaBieu ThoiKhoaBieu { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhiKham> PhiKham { get; set; }
     }
 }

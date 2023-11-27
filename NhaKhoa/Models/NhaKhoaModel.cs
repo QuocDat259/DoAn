@@ -8,7 +8,7 @@ namespace NhaKhoa.Models
     public partial class NhaKhoaModel : DbContext
     {
         public NhaKhoaModel()
-            : base("name=NhaKhoaModels")
+            : base("name=NhaKhoa")
         {
         }
 
@@ -23,9 +23,7 @@ namespace NhaKhoa.Models
         public virtual DbSet<HinhThucThanhToan> HinhThucThanhToan { get; set; }
         public virtual DbSet<HoaDon> HoaDon { get; set; }
         public virtual DbSet<KhungGio> KhungGio { get; set; }
-        public virtual DbSet<LichKham> LichKham { get; set; }
         public virtual DbSet<PhieuDatLich> PhieuDatLich { get; set; }
-        public virtual DbSet<PhiKham> PhiKham { get; set; }
         public virtual DbSet<Phong> Phong { get; set; }
         public virtual DbSet<TinTuc> TinTuc { get; set; }
         public virtual DbSet<ThoiKhoaBieu> ThoiKhoaBieu { get; set; }
@@ -67,11 +65,6 @@ namespace NhaKhoa.Models
                 .HasForeignKey(e => e.Id_benhnhan);
 
             modelBuilder.Entity<AspNetUsers>()
-                .HasMany(e => e.LichKham)
-                .WithOptional(e => e.AspNetUsers)
-                .HasForeignKey(e => e.Id_Nhasi);
-
-            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.PhieuDatLich)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.IdBenhNhan);
@@ -106,11 +99,6 @@ namespace NhaKhoa.Models
                 .HasMany(e => e.VatTuSuDung1)
                 .WithRequired(e => e.HoaDon1)
                 .HasForeignKey(e => e.Id_Vattu)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<PhieuDatLich>()
-                .HasMany(e => e.PhiKham)
-                .WithRequired(e => e.PhieuDatLich)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ThoiKhoaBieu>()

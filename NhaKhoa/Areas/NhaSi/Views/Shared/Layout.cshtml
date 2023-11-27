@@ -48,7 +48,7 @@
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
                                 <img src="~/img/Nhaisiimg/@ViewBag.HinhAnh" alt="image">
-                               <span class="availability-status online"></span>
+                                <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
                                 <p class="mb-1 text-black">@ViewBag.TenNhaSi</p>
@@ -181,7 +181,7 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="nav-profile-image">
-                                <img src="~/img/Nhaisiimg/@ViewBag.HinhAnh" alt="profile">
+                                <img src="~/Areas/NhaSi/assets/images/faces/face1.jpg" alt="profile">
                                 <span class="login-status online"></span>
                                 <!--change to offline or busy as needed-->
                             </div>
@@ -278,7 +278,7 @@
     <script src="~/Areas/NhaSi/assets/js/dashboard.js"></script>
     <script src="~/Areas/NhaSi/assets/js/todolist.js"></script>
     <!-- End custom js for this page -->
-
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

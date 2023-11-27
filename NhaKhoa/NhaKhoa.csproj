@@ -200,6 +200,7 @@
     <Compile Include="Areas\NhanVien\Controllers\InfoNVController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\QLBenhNhanController.cs" />
+    <Compile Include="Areas\NhanVien\Controllers\QLLichKhamController.cs" />
     <Compile Include="Areas\NhanVien\NhanVienAreaRegistration.cs" />
     <Compile Include="Areas\NhaSi\Controllers\InfoController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\NhaSiController.cs" />
@@ -226,12 +227,12 @@
     <Compile Include="Models\HoaDon.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KhungGio.cs" />
-    <Compile Include="Models\LichKham.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\NhaKhoaModel.cs" />
     <Compile Include="Models\PhieuDatLich.cs" />
-    <Compile Include="Models\PhiKham.cs" />
     <Compile Include="Models\Phong.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\ThoiKhoaBieu.cs" />
     <Compile Include="Models\ThoiKhoaBieuViewModel.cs" />
     <Compile Include="Models\Thu.cs" />
@@ -239,6 +240,8 @@
     <Compile Include="Models\TinTuc.cs" />
     <Compile Include="Models\VatTu.cs" />
     <Compile Include="Models\VatTuSuDung.cs" />
+    <Compile Include="Others\Others\MoMoSecurity.cs" />
+    <Compile Include="Others\Others\PaymentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -776,6 +779,12 @@
     <Content Include="Areas\Admin\Views\QLTinTuc\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QLTinTuc\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLTinTuc\Index.cshtml" />
+    <Content Include="Areas\NhaSi\Views\QLLich\AddCalendar.cshtml" />
+    <Content Include="Areas\NhaSi\Views\QLLich\EditCalendar.cshtml" />
+    <Content Include="Areas\NhanVien\Views\QLBenhNhan\Booking.cshtml" />
+    <Content Include="Areas\NhanVien\Views\QLLichKham\Delete.cshtml" />
+    <Content Include="Areas\NhanVien\Views\QLLichKham\Details.cshtml" />
+    <Content Include="Areas\NhanVien\Views\QLLichKham\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -836,6 +845,11 @@
     <Content Include="Views\Home\BlogGrid.cshtml" />
     <Content Include="Views\Home\BlogDetail.cshtml" />
     <Content Include="Views\Home\Appointment.cshtml" />
+    <Content Include="Views\Home\BookingView.cshtml" />
+    <Content Include="Views\Home\ConfirmPaymentClient.cshtml" />
+    <Content Include="Views\Home\NoResults.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\SearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
