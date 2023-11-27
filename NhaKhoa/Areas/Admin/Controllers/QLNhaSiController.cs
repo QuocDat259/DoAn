@@ -270,7 +270,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
                     return View(thoiKhoaBieu);
                 }
                 // Lấy giá trị của trường NgayLamViec và IdThu từ đối tượng NgayVaThu
-                NgayVaThu ngayVaThu = LayNgayVaThu(thoiKhoaBieu.NgayLamViec);
+                NgayVaThu ngayVaThu = LayNgayVaThu(thoiKhoaBieu.NgayLamViec);   
 
                 // Gán giá trị của NgayLamViec và IdThu từ đối tượng NgayVaThu
                 thoiKhoaBieu.NgayLamViec = ngayVaThu.NgayLamViec;
