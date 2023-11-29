@@ -24,12 +24,16 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             var user = db.AspNetUsers.Find(currentUserId);
             ViewBag.TenNhaSi = user.FullName;
             ViewBag.HinhAnh = user.HinhAnh;
+            if (user == null)
+            {
+                return View("ErrorView"); // Thay "ErrorView" bằng tên view hiển thị thông báo lỗi
+            }
             try
             {
                 // Filter ThoiKhoaBieu based on the Id_Nhasi
                 var thoiKhoaBieu = db.Thu.Where(u => u.ThoiKhoaBieu.Any(r => r.Id_Nhasi == currentUserId))
                     .Include(tkb => tkb.ThoiKhoaBieu.Select(t => t.PhieuDatLich)) // Include PhieuDatLiches
-            .ToList();
+                    .ToList();
 
 
                 if (thoiKhoaBieu == null || !thoiKhoaBieu.Any())

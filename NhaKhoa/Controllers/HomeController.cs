@@ -112,7 +112,7 @@ namespace NhaKhoa.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Appointment([Bind(Include = "Id_Phieudat,NgayKham,Gia,Id_hinhthuc,IdNhaSi,IdBenhNhan,Id_kTKB,STT,TrangThai,TrangThaiThanhToan")] PhieuDatLich DatLich)
+        public ActionResult Appointment([Bind(Include = "Id_Phieudat,NgayKham,Gia,Id_hinhthuc,IdNhaSi,IdBenhNhan,Id_TKB,STT,TrangThai,TrangThaiThanhToan")] PhieuDatLich DatLich)
         {
             if (ModelState.IsValid)
             {
