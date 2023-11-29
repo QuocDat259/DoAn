@@ -20,9 +20,9 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.NgayKham, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,7 +31,6 @@
                 @Html.ValidationMessageFor(model => model.NgayKham, "", new { @class = "text-danger" })
             </div>
         </div>
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.IdNhaSi, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -44,8 +43,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="text" class="form-control" value="150" readonly />
-                @Html.HiddenFor(model => model.Gia, new { @Value = "150" }) <!-- Giữ giá trị khi gửi form -->
+                <input type="text" class="form-control" value="150000" readonly />
+                @Html.HiddenFor(model => model.Gia, new { @Value = "150000" }) <!-- Giữ giá trị khi gửi form -->
                 @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
             </div>
         </div>

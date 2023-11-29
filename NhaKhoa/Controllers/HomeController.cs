@@ -119,7 +119,7 @@ namespace NhaKhoa.Controllers
             if (ModelState.IsValid)
             {
                 // Gán giá trị cố định 150 cho trường Gia
-                DatLich.Gia = 150;
+                DatLich.Gia = 150000;
                 // Lấy Id_TKB tương ứng với NgayKham từ cơ sở dữ liệu
                 DatLich.Id_kTKB = db.ThoiKhoaBieu
                     .Where(t => t.NgayLamViec == DatLich.NgayKham)
@@ -313,6 +313,7 @@ namespace NhaKhoa.Controllers
             }
 
             //request params need to request to MoMo system
+            string gia = appointment.Gia.ToString();
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
@@ -321,7 +322,7 @@ namespace NhaKhoa.Controllers
             string returnUrl = "https://localhost:44374/Home/ConfirmPaymentClient";
             string notifyurl = "https://4c8d-2001-ee0-5045-50-58c1-b2ec-3123-740d.ap.ngrok.io/Home/SavePayment"; //lưu ý: notifyurl không được sử dụng localhost, có thể sử dụng ngrok để public localhost trong quá trình test
 
-            string amount = "150000";
+            string amount = gia;
             string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
             string requestId = DateTime.Now.Ticks.ToString();
             string extraData = "";
@@ -389,11 +390,12 @@ namespace NhaKhoa.Controllers
         public ActionResult PaymentVNPay(int order)
         {
             var appointment = db.PhieuDatLich.Find(order);
+            appointment.Gia = 150000000;
             if(appointment == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            string gia = appointment.Gia.ToString();
             string url = ConfigurationManager.AppSettings["vnp_Url"];
             string returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
             string tmnCode = ConfigurationManager.AppSettings["vnp_TmnCode"];
@@ -405,7 +407,7 @@ namespace NhaKhoa.Controllers
             pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
             pay.AddRequestData("vnp_TmnCode", tmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
             pay.AddRequestData("vnp_Amount", "1000000"); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
-            pay.AddRequestData("vnp_BankCode", ""); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
+            pay.AddRequestData("vnp_BankCode", gia); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
             pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); //ngày thanh toán theo định dạng yyyyMMddHHmmss
             pay.AddRequestData("vnp_CurrCode", "VND"); //Đơn vị tiền tệ sử dụng thanh toán. Hiện tại chỉ hỗ trợ VND
             pay.AddRequestData("vnp_IpAddr", Util.GetIpAddress()); //Địa chỉ IP của khách hàng thực hiện giao dịch
