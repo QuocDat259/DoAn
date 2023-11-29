@@ -386,8 +386,14 @@ namespace NhaKhoa.Controllers
             string rErrorCode = result.errorCode; // = 0: thanh toán thành công
             return View();
         }
-        public ActionResult PaymentVNPay()
+        public ActionResult PaymentVNPay(int order)
         {
+            var appointment = db.PhieuDatLich.Find(order);
+            if(appointment == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             string url = ConfigurationManager.AppSettings["vnp_Url"];
             string returnUrl = ConfigurationManager.AppSettings["ReturnUrl"];
             string tmnCode = ConfigurationManager.AppSettings["vnp_TmnCode"];
@@ -410,7 +416,8 @@ namespace NhaKhoa.Controllers
             pay.AddRequestData("vnp_TxnRef", DateTime.Now.Ticks.ToString()); //mã hóa đơn
 
             string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
-
+            appointment.TrangThaiThanhToan = true;
+            db.SaveChanges();
             return Redirect(paymentUrl);
         }
 
