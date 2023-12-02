@@ -23,12 +23,13 @@ namespace NhaKhoa.Models
 
         public int? Soluong { get; set; }
 
-        [StringLength(128)]
-        public string Id_bacsi { get; set; }
-
         public int? Id_thuoc { get; set; }
 
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public int? Id_Phieudat { get; set; }
+
+        public string Chandoan { get; set; }
+
+        public virtual PhieuDatLich PhieuDatLich { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDon { get; set; }

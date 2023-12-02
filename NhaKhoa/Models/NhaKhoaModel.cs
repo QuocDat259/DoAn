@@ -55,11 +55,6 @@ namespace NhaKhoa.Models
                 .HasForeignKey(e => e.Id_Nhasi);
 
             modelBuilder.Entity<AspNetUsers>()
-                .HasMany(e => e.DonThuoc)
-                .WithOptional(e => e.AspNetUsers)
-                .HasForeignKey(e => e.Id_bacsi);
-
-            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.HoaDon)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.Id_benhnhan);
@@ -88,18 +83,6 @@ namespace NhaKhoa.Models
                 .HasMany(e => e.Thuoc)
                 .WithMany(e => e.DonThuoc)
                 .Map(m => m.ToTable("ChiTietThuoc").MapLeftKey("Id_donthuoc").MapRightKey("Id_thuoc"));
-
-            modelBuilder.Entity<HoaDon>()
-                .HasMany(e => e.VatTuSuDung)
-                .WithRequired(e => e.HoaDon)
-                .HasForeignKey(e => e.Id_dichvu)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<HoaDon>()
-                .HasMany(e => e.VatTuSuDung1)
-                .WithRequired(e => e.HoaDon1)
-                .HasForeignKey(e => e.Id_Vattu)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<ThoiKhoaBieu>()
                 .HasMany(e => e.PhieuDatLich)

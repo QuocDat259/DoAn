@@ -238,3 +238,7 @@ D:\DACN\NhaKhoa\bin\PagedList.dll
 D:\DACN\NhaKhoa\bin\PagedList.Mvc.dll
 D:\DACN\NhaKhoa\bin\PagedList.xml
 D:\DACN\NhaKhoa\bin\PagedList.Mvc.xml
+D:\DACN\NhaKhoa\bin\SendGrid.dll
+D:\DACN\NhaKhoa\bin\StarkbankEcdsa.dll
+D:\DACN\NhaKhoa\bin\SendGrid.pdb
+D:\DACN\NhaKhoa\bin\SendGrid.xml

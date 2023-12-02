@@ -10,5 +10,6 @@ namespace NhaKhoa.Models
         public string Keyword { get; set; }
         public List<AspNetUsers> NhaSiResults { get; set; }
         public List<TinTuc> TinTucResults { get; set; }
+        public List<DichVu> DicVuResults { get; set; }
     }
 }

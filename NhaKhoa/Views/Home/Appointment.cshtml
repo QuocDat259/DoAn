@@ -9,6 +9,7 @@
         List<SelectListItem> paymentMethods = new List<SelectListItem>();
         paymentMethods.Add(new SelectListItem { Text = "Thanh toán bằng Momo", Value = "1" });
         paymentMethods.Add(new SelectListItem { Text = "Thanh toán VNPay", Value = "2" });
+        paymentMethods.Add(new SelectListItem { Text = "Thanh toán trực tiếp", Value = "3" });
         return paymentMethods;
 
     }
@@ -20,9 +21,9 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
             @Html.LabelFor(model => model.NgayKham, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -31,6 +32,7 @@
                 @Html.ValidationMessageFor(model => model.NgayKham, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.IdNhaSi, htmlAttributes: new { @class = "control-label col-md-2" })

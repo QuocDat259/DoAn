@@ -24,10 +24,6 @@ namespace NhaKhoa.Models
 
         public virtual DichVu DichVu { get; set; }
 
-        public virtual HoaDon HoaDon { get; set; }
-
-        public virtual HoaDon HoaDon1 { get; set; }
-
         public virtual VatTu VatTu { get; set; }
     }
 }
