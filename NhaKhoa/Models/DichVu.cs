@@ -25,6 +25,8 @@ namespace NhaKhoa.Models
         public string Mota { get; set; }
 
         public int? Id_Vattu { get; set; }
+        public string HinhAnh { get; set; }
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VatTuSuDung> VatTuSuDung { get; set; }
