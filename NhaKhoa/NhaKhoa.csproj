@@ -789,7 +789,6 @@
     <Content Include="Areas\Admin\Views\QLTinTuc\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QLTinTuc\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLTinTuc\Index.cshtml" />
-    <Content Include="Areas\NhaSi\Views\QLLich\AddCalendar.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLich\EditCalendar.cshtml" />
     <Content Include="Areas\NhanVien\Views\QLBenhNhan\Booking.cshtml" />
     <Content Include="Areas\NhanVien\Views\QLLichKham\Delete.cshtml" />
