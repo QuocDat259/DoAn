@@ -217,6 +217,7 @@
     <Compile Include="Areas\NhaSi\NhaSiAreaRegistration.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookingDentistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -869,6 +870,7 @@
     <Content Include="Views\Home\SearchResults.cshtml" />
     <Content Include="Views\Home\PaymentVNPayConfirm.cshtml" />
     <Content Include="Views\Home\ServiceDetail.cshtml" />
+    <Content Include="Views\BookingDentist\Appointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
