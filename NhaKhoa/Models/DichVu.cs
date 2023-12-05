@@ -18,8 +18,6 @@ namespace NhaKhoa.Models
 
         public string Mota { get; set; }
 
-        public int? Id_Vattu { get; set; }
-
         public string HinhAnh { get; set; }
     }
 }
