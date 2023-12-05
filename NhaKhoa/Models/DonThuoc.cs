@@ -25,7 +25,7 @@ namespace NhaKhoa.Models
 
         public int? Id_thuoc { get; set; }
 
-        public int? Id_Phieudat { get; set; }
+        public int? Id_phieudat { get; set; }
 
         public string Chandoan { get; set; }
 

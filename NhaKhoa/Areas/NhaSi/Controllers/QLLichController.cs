@@ -97,7 +97,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             ViewBag.Id_Nhasi = new SelectList(db.AspNetUsers, "Id", "Email", thoiKhoaBieu.Id_Nhasi);
             ViewBag.Id_khunggio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa", thoiKhoaBieu.Id_khunggio);
             ViewBag.Id_Phong = new SelectList(db.Phong, "Id_Phong", "TenPhong", thoiKhoaBieu.Id_Phong);
-            ViewBag.Id_Thu = new SelectList(db.Thu, "Id_Thu", "TenThu", thoiKhoaBieu.IdThu);
+            ViewBag.Id_Thu = new SelectList(db.Thu, "Id_Thu", "TenThu", thoiKhoaBieu.Id_Thu);
             return View(thoiKhoaBieu);
         }
 
@@ -117,7 +117,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             ViewBag.Id_Nhasi = new SelectList(db.AspNetUsers, "Id", "Email", thoiKhoaBieu.Id_Nhasi);
             ViewBag.Id_khunggio = new SelectList(db.KhungGio, "Id_khunggio", "TenCa", thoiKhoaBieu.Id_khunggio);
             ViewBag.Id_Phong = new SelectList(db.Phong, "Id_Phong", "TenPhong", thoiKhoaBieu.Id_Phong);
-            ViewBag.Id_Thu = new SelectList(db.Thu, "Id_Thu", "TenThu", thoiKhoaBieu.IdThu);
+            ViewBag.Id_Thu = new SelectList(db.Thu, "Id_Thu", "TenThu", thoiKhoaBieu.Id_Thu);
             return View(thoiKhoaBieu);
         }
         [HttpPost]
@@ -136,7 +136,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
 
                 // Gán giá trị của NgayLamViec và IdThu từ đối tượng NgayVaThu
                 thoiKhoaBieu.NgayLamViec = ngayVaThu.NgayLamViec;
-                thoiKhoaBieu.IdThu = ngayVaThu.IdThu; // Use IdThu instead of TenThuId
+                thoiKhoaBieu.Id_Thu = ngayVaThu.IdThu; // Use IdThu instead of TenThuId
 
                 // Kiểm tra trùng lặp trước khi thêm mới
                 if (KiemTraTrungLich(thoiKhoaBieu))
@@ -193,7 +193,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 string tenThu = daysOfWeek[(int)ngayLamViec.Value.DayOfWeek];
 
                 // Lấy Id của TenThu từ bảng Thu
-                int idThu = db.Thu.Single(t => t.TenThu == tenThu).idThu;
+                int idThu = db.Thu.Single(t => t.TenThu == tenThu).Id_Thu;
 
                 // Trả về đối tượng chứa ngày và Id của TenThu
                 return new NgayVaThu { NgayLamViec = ngayLamViec, IdThu = idThu };
@@ -225,7 +225,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                     // Nếu có tuần đã chọn, lọc danh sách thời khóa biểu cho tuần đó
                     var filteredThoiKhoaBieu = danhSachThoiKhoaBieu
                         .Where(tkb => tkb.NgayLamViec.HasValue && tkb.NgayLamViec.Value.Date == startOfWeek.Date)
-                        .OrderBy(e => e.IdThu)
+                        .OrderBy(e => e.Id_Thu)
                         .ThenBy(e => e.NgayLamViec)
                         .ToList();
 

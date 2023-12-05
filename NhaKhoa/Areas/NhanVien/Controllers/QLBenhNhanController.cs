@@ -189,7 +189,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
                 // Gán giá trị cố định 150 cho trường Gia
                 DatLich.Gia = 150;
                 // Lấy Id_TKB tương ứng với NgayKham từ cơ sở dữ liệu
-                DatLich.Id_kTKB = db.ThoiKhoaBieu
+                DatLich.Id_TKB = db.ThoiKhoaBieu
                     .Where(t => t.NgayLamViec == DatLich.NgayKham)
                     .Select(t => t.Id_TKB)
                     .FirstOrDefault();

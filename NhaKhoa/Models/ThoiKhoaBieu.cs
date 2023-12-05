@@ -18,17 +18,17 @@ namespace NhaKhoa.Models
         [Key]
         public int Id_TKB { get; set; }
 
-        public int? IdThu { get; set; }
+        public int? Id_Thu { get; set; }
 
         public int? Id_Phong { get; set; }
-
-        [StringLength(128)]
-        public string Id_Nhasi { get; set; }
 
         public int? Id_khunggio { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? NgayLamViec { get; set; }
+
+        [StringLength(128)]
+        public string Id_Nhasi { get; set; }
 
         public virtual AspNetUsers AspNetUsers { get; set; }
 

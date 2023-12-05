@@ -124,7 +124,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
 
             DonThuoc donThuoc = new DonThuoc
             {
-                Id_Phieudat = id_phieudat,
+                Id_phieudat = id_phieudat,
                 // Set other properties as needed
             };
 

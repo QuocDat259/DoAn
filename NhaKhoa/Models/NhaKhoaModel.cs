@@ -29,8 +29,6 @@ namespace NhaKhoa.Models
         public virtual DbSet<ThoiKhoaBieu> ThoiKhoaBieu { get; set; }
         public virtual DbSet<Thu> Thu { get; set; }
         public virtual DbSet<Thuoc> Thuoc { get; set; }
-        public virtual DbSet<VatTu> VatTu { get; set; }
-        public virtual DbSet<VatTuSuDung> VatTuSuDung { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -74,25 +72,10 @@ namespace NhaKhoa.Models
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.Id_Nhasi);
 
-            modelBuilder.Entity<DichVu>()
-                .HasMany(e => e.VatTuSuDung)
-                .WithRequired(e => e.DichVu)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<DonThuoc>()
                 .HasMany(e => e.Thuoc)
                 .WithMany(e => e.DonThuoc)
                 .Map(m => m.ToTable("ChiTietThuoc").MapLeftKey("Id_donthuoc").MapRightKey("Id_thuoc"));
-
-            modelBuilder.Entity<ThoiKhoaBieu>()
-                .HasMany(e => e.PhieuDatLich)
-                .WithOptional(e => e.ThoiKhoaBieu)
-                .HasForeignKey(e => e.Id_kTKB);
-
-            modelBuilder.Entity<VatTu>()
-                .HasMany(e => e.VatTuSuDung)
-                .WithRequired(e => e.VatTu)
-                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace NhaKhoa.Models
         [Key]
         public int Id_Phieudat { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? NgayKham { get; set; }
 
         public double? Gia { get; set; }
@@ -30,7 +31,7 @@ namespace NhaKhoa.Models
         [StringLength(128)]
         public string IdBenhNhan { get; set; }
 
-        public int? Id_kTKB { get; set; }
+        public int? Id_TKB { get; set; }
 
         public int? STT { get; set; }
 
