@@ -14,6 +14,7 @@ using System.Text;
 using PagedList;
 using PagedList.Mvc;
 using System.Globalization;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
@@ -175,12 +176,15 @@ namespace NhaKhoa.Areas.Admin.Controllers
             {
                 // Lấy danh sách các ngày trong tuần và lịch làm việc từ cơ sở dữ liệu
                 var danhSachThu = db.Thu.ToList();
-                var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.ToList();
+                var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.OrderBy(a => a.Id_Thu).ThenBy(a => a.NgayLamViec).ToList();
 
                 // Kiểm tra xem có dữ liệu để hiển thị không
                 if (danhSachThu.Any() && danhSachThoiKhoaBieu.Any())
                 {
-                    DateTime startOfWeek = selectedWeek ?? DateTime.Now;
+                    var now = DateTime.Now;
+                    var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
+                    var monday = now.AddDays(-daysUntilMonday);
+                    DateTime startOfWeek = selectedWeek ?? monday;
 
                     // Nếu có tuần đã chọn, lọc danh sách thời khóa biểu cho tuần đó
                     var filteredThoiKhoaBieu = danhSachThoiKhoaBieu
