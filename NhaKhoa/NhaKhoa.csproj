@@ -199,6 +199,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoanhThuLichKhamController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DoanThuBanThuocController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManagerBookingController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLBenhNhanController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhanVienController.cs" />
@@ -801,6 +803,16 @@
     <Content Include="Areas\NhaSi\Views\QLLKham\Index.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLKham\ViewAllBooking.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLKham\LapDonThuoc.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThuLichKham\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThuLichKham\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThuLichKham\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThuLichKham\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanhThuLichKham\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
