@@ -16,8 +16,6 @@
 </header>
 
 
-
-
 <button id="prevWeek">Tuần Trước</button>
 <label for="weekSelect">Chọn Tuần:</label>
 <select id="weekSelect">
@@ -78,6 +76,7 @@
                                             e.NgayLamViec.Value.Date <= selectedWeekEndDate)
                                 .OrderBy(e => e.NgayLamViec))
                                 {
+
                                     var uniqueEventId = $"event-{counter}";
                                     counter++;
                                     <li class="cd-schedule__event">
@@ -91,6 +90,7 @@
                                         </a>
                                     </li>
                                 }
+
                             </ul>
                         </li>
                     }
@@ -126,8 +126,8 @@
     <div class="cd-schedule__cover-layer"></div>
 </div>
 <!-- Your existing code ... -->
-<script src="~/Areas/assetsTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-<script src="~/Areas/assetsTKB/js/main.js"></script>
+<script src="~/Areas/assetTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+<script src="~/Areas/assetTKB/js/main.js"></script>
 
 
 @section scripts {

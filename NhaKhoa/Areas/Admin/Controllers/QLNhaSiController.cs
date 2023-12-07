@@ -226,7 +226,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
         }
 
-
+        //thêm chọn năm
         static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
         {
             DateTime[] weeks = new DateTime[calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)];
@@ -296,6 +296,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
                 {
                     return AddValidationErrorAndReturnView("Nha sĩ và phòng dã bị trùng", thoiKhoaBieu);
                 }
+
                 if (thoiKhoaBieu.Id_Phong == null)
                 {
                     return AddValidationErrorAndReturnView("Vui lòng chọn phòng làm việc", thoiKhoaBieu);
