@@ -170,7 +170,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(DateTime? selectedWeek)
+        public ActionResult TKB(DateTime? selectedWeek, int? selectedYear)
         {
             try
             {
@@ -193,11 +193,15 @@ namespace NhaKhoa.Areas.Admin.Controllers
                         .ThenBy(e => e.NgayLamViec)
                         .ToList();
 
+                    // Xử lý chọn năm từ DropdownList hoặc sử dụng năm hiện tại nếu không có năm được chọn
+                    int year = selectedYear ?? DateTime.Now.Year;
+                    int[] years = Enumerable.Range(year, 10).ToArray();
+
                     // Lấy calendar hiện tại (GregorianCalendar)
                     GregorianCalendar calendar = new GregorianCalendar();
 
                     // Tạo mảng chứa các tuần
-                    DateTime[] weeks = GetWeeksInYear(DateTime.Now.Year, calendar);
+                    DateTime[] weeks = GetWeeksInYear(year, calendar);
 
                     // Tạo ViewModel
                     var viewModel = new ThoiKhoaBieuViewModel
@@ -205,6 +209,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
                         DanhSachThu = danhSachThu,
                         DanhSachThoiKhoaBieu = filteredThoiKhoaBieu,
                         weeks = weeks,
+                        Years = years,
                         SelectedWeek = startOfWeek
                     };
 
@@ -226,23 +231,44 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
         }
 
-        //thêm chọn năm
-        static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
+        //private DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
+        //{
+        //    List<DateTime> weeks = new List<DateTime>();
+
+        //    // Ngày đầu tiên của năm
+        //    DateTime startDate = new DateTime(year, 1, 1);
+
+        //    // Đếm số ngày đã được thêm vào mảng
+        //    int daysAdded = 0;
+
+        //    // Duyệt qua từng ngày trong năm
+        //    for (int i = 0; i < 365; i++)
+        //    {
+        //        DateTime currentDate = startDate.AddDays(i);
+
+        //        // Nếu là ngày đầu tiên của một tuần, thêm vào mảng
+        //        if (currentDate.DayOfWeek == DayOfWeek.Monday)
+        //        {
+        //            weeks.Add(currentDate);
+        //            daysAdded++;
+        //        }
+        //    }
+
+        //    return weeks.ToArray();
+        //}
+
+        // Phương thức chọn năm, mặc định lấy năm hiện tại
+        private static DateTime[] GetWeeksInYear(int selectedYear, GregorianCalendar calendar)
         {
-            DateTime[] weeks = new DateTime[calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday)];
-
-            // Ngày đầu tiên của năm
-            DateTime startDate = new DateTime(year, 1, 1);
-
-            // Đếm số ngày đã được thêm vào mảng
+            int numberOfWeeks = calendar.GetWeekOfYear(new DateTime(selectedYear, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            DateTime[] weeks = new DateTime[numberOfWeeks];
+            DateTime startDate = new DateTime(selectedYear, 1, 1);
             int daysAdded = 0;
 
-            // Duyệt qua từng ngày trong năm
             for (int i = 0; i < 365; i++)
             {
                 DateTime currentDate = startDate.AddDays(i);
 
-                // Nếu là ngày đầu tiên của một tuần, thêm vào mảng
                 if (currentDate.DayOfWeek == DayOfWeek.Monday)
                 {
                     weeks[calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) - 1] = currentDate;
@@ -252,6 +278,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
 
             return weeks;
         }
+
         public ActionResult ThemThoiKhoaBieu()
         {
             ViewBag.ListPhong = new SelectList(db.Phong, "Id_Phong", "TenPhong");

@@ -6,6 +6,7 @@
     ViewBag.Title = "TKB";
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
     var now = DateTime.Now;
+    int currentYear = DateTime.Now.Year;
     int counter = 1;
     var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
     var monday = now.AddDays(-daysUntilMonday);
@@ -17,6 +18,16 @@
     <h1 class="text-xl">THỜI GIAN BIỂU</h1>
     <a class="btn--primary" href="@Url.Action("ThemThoiKhoaBieu", "QLNhaSi", "Admin")">Thêm lịch làm việc</a>
 </header>
+
+
+<label for="selectedYear">Chọn Năm:</label>
+<select name="selectedYear" id="selectedYear">
+    @foreach (var year in Model.Years)
+    {
+        <option value="@year" @(Model.SelectedYear == year ? "selected" : "")>@year</option>
+    }
+</select>
+
 <button id="prevWeek">Tuần Trước</button>
 <label for="weekSelect">Chọn Tuần:</label>
 <select id="weekSelect">
@@ -133,27 +144,37 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
-            function updateWeek(selectedWeek) {
-                window.location.href = "@Url.Action("TKB", "QLNhaSi")" + "?page=1&selectedWeek=" + selectedWeek;
+            function updateWeek(selectedWeek, selectedYear) {
+                window.location.href = "@Url.Action("TKB", "QLNhaSi")" + "?page=1&selectedWeek=" + selectedWeek + "&selectedYear=" + selectedYear;
             }
+
 
             $('#weekSelect').change(function () {
                 var selectedWeek = $(this).val();
-                updateWeek(selectedWeek);
+                var selectedYear = $('#selectedYear').val();
+                updateWeek(selectedWeek, selectedYear);
+            });
+
+            $('#selectedYear').change(function () {
+                var selectedWeek = $('#weekSelect').val();
+                var selectedYear = $(this).val();
+                updateWeek(selectedWeek, selectedYear);
             });
 
             $('#prevWeek').click(function () {
                 var selectedWeek = new Date($('#weekSelect').val());
                 var prevWeek = new Date(selectedWeek);
-                prevWeek.setDate(prevWeek.getDate() - 7); // Subtract 7 days to go back one week
-                updateWeek(prevWeek.toISOString().slice(0, 10));
+                prevWeek.setDate(prevWeek.getDate() - 7);
+                var selectedYear = $('#selectedYear').val();
+                updateWeek(prevWeek.toISOString().slice(0, 10), selectedYear);
             });
 
             $('#nextWeek').click(function () {
                 var selectedWeek = new Date($('#weekSelect').val());
                 var nextWeek = new Date(selectedWeek);
-                nextWeek.setDate(nextWeek.getDate() + 7); // Add 7 days to go forward one week
-                updateWeek(nextWeek.toISOString().slice(0, 10));
+                nextWeek.setDate(nextWeek.getDate() + 7);
+                var selectedYear = $('#selectedYear').val();
+                updateWeek(nextWeek.toISOString().slice(0, 10), selectedYear);
             });
         });
     </script>

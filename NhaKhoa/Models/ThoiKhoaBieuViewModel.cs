@@ -11,6 +11,8 @@ namespace NhaKhoa.Models
         public List<Thu> DanhSachThu { get; set; }
         public List<ThoiKhoaBieu> DanhSachThoiKhoaBieu { get; set; }
         public DateTime[] weeks { get; set; }
+        public int SelectedYear { get; set; }
+        public int[] Years { get; set; }
         public DateTime SelectedWeek { get; set; }
 
         public List<ThoiKhoaBieu> WorkSchedules { get; set; }

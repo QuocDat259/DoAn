@@ -1,54 +1,34 @@
 ﻿using System;
+using System.Globalization;
 
 class Program
 {
-    static int BinarySearch(int[] a, int n, int x)
-    {
-        int left = 0, right = n - 1, idx = -1;
-
-        while (left <= right)
-        {
-            int middle = (left + right) / 2;
-
-            if (a[middle] == x)
-            {
-                idx = middle;
-                break;
-            }
-            else if (a[middle] > x)
-            {
-                right = middle - 1;
-            }
-            else
-            {
-                left = middle + 1;
-            }
-        }
-
-        return idx;
-    }
-
     static void Main()
     {
-        // Khai báo mảng đã được sắp xếp
-        int[] sortedArray = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        int arraySize = sortedArray.Length;
-
-
-        // Nhập giá trị cần tìm từ bàn phím
-        Console.Write("Nhập giá trị cần tìm: ");
-        int targetValue = Convert.ToInt32(Console.ReadLine());
-
-        // Gọi hàm BinarySearch và in kết quả
-        int resultIndex = BinarySearch(sortedArray, arraySize, targetValue);
-
-        if (resultIndex != -1)
+        Console.Write("Nhập năm: ");
+        int selectedYear;
+        while (!int.TryParse(Console.ReadLine(), out selectedYear))
         {
-            Console.WriteLine($"Giá tri {targetValue} đuoc tim thay tai chi so {resultIndex}");
+            Console.Write("Nhập lại năm là một số nguyên: ");
         }
-        else
+
+        Console.Write("Nhập tuần: ");
+        int selectedWeek;
+        while (!int.TryParse(Console.ReadLine(), out selectedWeek))
         {
-            Console.WriteLine($"Giá tri {targetValue} khong đuoc tim thay trong mang.");
+            Console.Write("Nhập lại tuần là một số nguyên: ");
         }
+
+        DateTime startOfWeek = GetStartOfWeek(selectedYear, selectedWeek);
+
+        Console.WriteLine($"Ngày bắt đầu của tuần {selectedWeek} trong năm {selectedYear} là: {startOfWeek:yyyy-MM-dd}");
+    }
+
+    private static DateTime GetStartOfWeek(int year, int week)
+    {
+        GregorianCalendar calendar = new GregorianCalendar();
+        DateTime jan1 = new DateTime(year, 1, 1);
+        DateTime startOfWeek = calendar.ToDateTime(year, 1, 1, 0, 0, 0, 0).AddDays((week - 1) * 7 - (int)calendar.GetDayOfWeek(jan1) + (int)DayOfWeek.Monday);
+        return startOfWeek;
     }
 }
