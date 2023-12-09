@@ -170,7 +170,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(DateTime? selectedWeek, int? selectedYear)
+        public ActionResult TKB(DateTime? selectedWeek)
         {
             try
             {
@@ -193,15 +193,11 @@ namespace NhaKhoa.Areas.Admin.Controllers
                         .ThenBy(e => e.NgayLamViec)
                         .ToList();
 
-                    // Xử lý chọn năm từ DropdownList hoặc sử dụng năm hiện tại nếu không có năm được chọn
-                    int year = selectedYear ?? DateTime.Now.Year;
-                    int[] years = Enumerable.Range(year, 10).ToArray();
-
                     // Lấy calendar hiện tại (GregorianCalendar)
                     GregorianCalendar calendar = new GregorianCalendar();
 
                     // Tạo mảng chứa các tuần
-                    DateTime[] weeks = GetWeeksInYear(year, calendar);
+                    DateTime[] weeks = GetWeeksInYear(startOfWeek.Year, calendar);
 
                     // Tạo ViewModel
                     var viewModel = new ThoiKhoaBieuViewModel
@@ -209,7 +205,6 @@ namespace NhaKhoa.Areas.Admin.Controllers
                         DanhSachThu = danhSachThu,
                         DanhSachThoiKhoaBieu = filteredThoiKhoaBieu,
                         weeks = weeks,
-                        Years = years,
                         SelectedWeek = startOfWeek
                     };
 
@@ -258,17 +253,23 @@ namespace NhaKhoa.Areas.Admin.Controllers
         //}
 
         // Phương thức chọn năm, mặc định lấy năm hiện tại
-        private static DateTime[] GetWeeksInYear(int selectedYear, GregorianCalendar calendar)
+        static DateTime[] GetWeeksInYear(int year, GregorianCalendar calendar)
         {
-            int numberOfWeeks = calendar.GetWeekOfYear(new DateTime(selectedYear, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-            DateTime[] weeks = new DateTime[numberOfWeeks];
-            DateTime startDate = new DateTime(selectedYear, 1, 1);
+            int totalWeeks = calendar.GetWeekOfYear(new DateTime(year, 12, 31), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+            DateTime[] weeks = new DateTime[totalWeeks];
+
+            // Ngày đầu tiên của năm
+            DateTime startDate = new DateTime(year, 1, 1);
+
+            // Đếm số ngày đã được thêm vào mảng
             int daysAdded = 0;
 
-            for (int i = 0; i < 365; i++)
+            // Duyệt qua từng ngày trong năm
+            for (int i = 0; i < totalWeeks * 7; i++)
             {
                 DateTime currentDate = startDate.AddDays(i);
 
+                // Nếu là ngày đầu tiên của một tuần, thêm vào mảng
                 if (currentDate.DayOfWeek == DayOfWeek.Monday)
                 {
                     weeks[calendar.GetWeekOfYear(currentDate, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday) - 1] = currentDate;
