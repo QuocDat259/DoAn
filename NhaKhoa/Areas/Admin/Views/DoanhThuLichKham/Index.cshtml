@@ -5,8 +5,15 @@
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
 }
 
-<h2>Index</h2>
-
+<h2>Doanh thu khám</h2>
+@using (Html.BeginForm("Index", "DoanhThuLichKham", FormMethod.Get))
+{
+    <div class="form-group">
+        <label for="selectedDate">Chọn Ngày:</label>
+        <input type="date" id="selectedDate" name="selectedDate" class="form-control" />
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </div>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -81,7 +88,7 @@
                 {
                     <span class="text-danger">Chưa thanh toán</span>
                 }
-            </td>            
+            </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id_Phieudat }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id_Phieudat }) |

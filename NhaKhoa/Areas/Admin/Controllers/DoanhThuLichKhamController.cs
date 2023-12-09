@@ -16,9 +16,19 @@ namespace NhaKhoa.Areas.Admin.Controllers
         private NhaKhoaModel db = new NhaKhoaModel();
 
         // GET: Admin/DoanhThuLichKham
-        public ActionResult Index(int ? page)
+        public ActionResult Index(DateTime? selectedDate)
         {
             var phieuDatLich = db.PhieuDatLich.Include(p => p.AspNetUsers).Include(p => p.HinhThucThanhToan).Include(p => p.ThoiKhoaBieu);
+
+            if (selectedDate.HasValue)
+            {
+                // Lọc theo ngày được chọn từ view
+                phieuDatLich = phieuDatLich.Where(p => DbFunctions.TruncateTime(p.NgayKham) == DbFunctions.TruncateTime(selectedDate.Value));
+            }
+
+            // Sắp xếp theo ngày
+            phieuDatLich = phieuDatLich.OrderBy(p => p.NgayKham);
+
             var idNhaSiList = phieuDatLich.Select(p => p.IdNhaSi).ToList();
             var idBenhNhaList = phieuDatLich.Select(p => p.IdBenhNhan).ToList();
 
@@ -33,7 +43,8 @@ namespace NhaKhoa.Areas.Admin.Controllers
             // Truyền thông tin vào ViewBag
             ViewBag.FullNameNhaSi = nhaSiDict;
             ViewBag.FullNameBenhNhan = benhNhanDict;
-            return View(phieuDatLich);
+
+            return View(phieuDatLich.ToList());
         }
 
         // GET: Admin/DoanhThuLichKham/Details/5
