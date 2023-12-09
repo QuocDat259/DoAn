@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NhaKhoa.Models;
+using PagedList;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
@@ -15,10 +16,24 @@ namespace NhaKhoa.Areas.Admin.Controllers
         private NhaKhoaModel db = new NhaKhoaModel();
 
         // GET: Admin/DoanhThuLichKham
-        public ActionResult Index()
+        public ActionResult Index(int ? page)
         {
             var phieuDatLich = db.PhieuDatLich.Include(p => p.AspNetUsers).Include(p => p.HinhThucThanhToan).Include(p => p.ThoiKhoaBieu);
-            return View(phieuDatLich.ToList());
+            var idNhaSiList = phieuDatLich.Select(p => p.IdNhaSi).ToList();
+            var idBenhNhaList = phieuDatLich.Select(p => p.IdBenhNhan).ToList();
+
+            var nhaSiDict = db.AspNetUsers
+                .Where(u => idNhaSiList.Contains(u.Id))
+                .ToDictionary(u => u.Id, u => u.FullName);
+
+            var benhNhanDict = db.AspNetUsers
+                .Where(u => idBenhNhaList.Contains(u.Id))
+                .ToDictionary(u => u.Id, u => u.FullName);
+
+            // Truyền thông tin vào ViewBag
+            ViewBag.FullNameNhaSi = nhaSiDict;
+            ViewBag.FullNameBenhNhan = benhNhanDict;
+            return View(phieuDatLich);
         }
 
         // GET: Admin/DoanhThuLichKham/Details/5

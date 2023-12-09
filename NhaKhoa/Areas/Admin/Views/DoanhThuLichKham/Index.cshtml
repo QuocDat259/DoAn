@@ -13,70 +13,82 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+            STT
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HinhThucThanhToan.TenHinhThuc)
+            Tên nha sĩ
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ThoiKhoaBieu.Id_Nhasi)
+            Hình thức thanh toán
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NgayKham)
+            Ngày khám
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gia)
+            Giá khám
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IdNhaSi)
+            Tên bệnh nhân
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.STT)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TrangThai)
+            Trạng thái khám
         </th>
         <th>
             @Html.DisplayNameFor(model => model.TrangThaiThanhToan)
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HinhThucThanhToan.TenHinhThuc)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ThoiKhoaBieu.Id_Nhasi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayKham)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdNhaSi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.STT)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrangThai)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TrangThaiThanhToan)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id_Phieudat }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id_Phieudat }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id_Phieudat })
-        </td>
-    </tr>
-}
+    @{
+        int counter = 1; // Initialize a counter variable
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @(ViewBag.FullNameNhaSi.ContainsKey(item.IdNhaSi) ? ViewBag.FullNameNhaSi[item.IdNhaSi] : "N/A")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HinhThucThanhToan.TenHinhThuc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NgayKham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @(ViewBag.FullNameBenhNhan.ContainsKey(item.IdBenhNhan) ? ViewBag.FullNameBenhNhan[item.IdBenhNhan] : "N/A")
+            </td>
+            <td>
+                @if (item.TrangThai == true)
+                {
+                    <span class="text-success">Đã khám</span>
+                }
+                else
+                {
+                    <span class="text-danger">Chưa khám</span>
+                }
+            </td>
+            <td>
+                @if (item.TrangThaiThanhToan == true)
+                {
+                    <span class="text-success">Đã thanh toán</span>
+                }
+                else
+                {
+                    <span class="text-danger">Chưa thanh toán</span>
+                }
+            </td>            
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id_Phieudat }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id_Phieudat }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id_Phieudat })
+            </td>
+        </tr>
+        counter++;
+    }
 
 </table>
