@@ -479,20 +479,20 @@ namespace NhaKhoa.Controllers
 
             //build body json request
             JObject message = new JObject
-    {
-        { "partnerCode", partnerCode },
-        { "accessKey", accessKey },
-        { "requestId", requestId },
-        { "amount", amount },
-        { "orderId", orderid },
-        { "orderInfo", orderInfo },
-        { "returnUrl", returnUrl },
-        { "notifyUrl", notifyurl },
-        { "extraData", extraData },
-        { "requestType", "captureMoMoWallet" },
-        { "signature", signature }
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
 
-    };
+            };
 
             string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
 
