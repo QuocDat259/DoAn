@@ -57,6 +57,11 @@ namespace NhaKhoa.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            // Lấy tên của NhaSi từ IdBenhNhan
+            ViewBag.TenNhaSi = db.AspNetUsers.FirstOrDefault(u => u.Id == phieuDatLich.IdNhaSi)?.FullName;
+
+            // Lấy tên của BenhNhan từ IdBenhNhan
+            ViewBag.TenBenhNhan = db.AspNetUsers.FirstOrDefault(u => u.Id == phieuDatLich.IdBenhNhan)?.FullName;
             return View(phieuDatLich);
         }
 

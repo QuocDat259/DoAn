@@ -1,4 +1,4 @@
-﻿@model NhaKhoa.Models.AspNetUser
+﻿@model NhaKhoa.Models.AspNetUsers
 
 @{
     ViewBag.Title = "Details";
@@ -110,6 +110,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning btn-sm" }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

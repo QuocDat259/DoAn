@@ -182,12 +182,12 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Booking([Bind(Include = "Id_Phieudat,NgayKham,Gia,Id_hinhthuc,IdNhaSi,IdBenhNhan,Id_kTKB,STT,TrangThai,TrangThaiThanhToan")] PhieuDatLich DatLich, string id)
+        public ActionResult Booking([Bind(Include = "Id_Phieudat,NgayKham,Gia,Id_hinhthuc,IdNhaSi,IdBenhNhan,Id_TKB,STT,TrangThai,TrangThaiThanhToan")] PhieuDatLich DatLich, string id)
         {
             if (ModelState.IsValid)
             {
                 // Gán giá trị cố định 150 cho trường Gia
-                DatLich.Gia = 150;
+                DatLich.Gia = 150000;
                 // Lấy Id_TKB tương ứng với NgayKham từ cơ sở dữ liệu
                 DatLich.Id_TKB = db.ThoiKhoaBieu
                     .Where(t => t.NgayLamViec == DatLich.NgayKham)
@@ -199,14 +199,31 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
                 DatLich.STT = CalculateSTT(DatLich.NgayKham, DatLich.IdNhaSi);
 
                 DatLich.IdBenhNhan = id;
+                var numberOfAppointments = db.PhieuDatLich.Count(l => l.IdNhaSi == DatLich.IdNhaSi && l.NgayKham.HasValue && DbFunctions.TruncateTime(l.NgayKham) == DbFunctions.TruncateTime(DatLich.NgayKham));
 
+                if (numberOfAppointments >= 2)
+                {
+                    ModelState.AddModelError("", "Nha sĩ này đã đủ số lượng lịch hẹn cho ngày này. Vui lòng chọn nha sĩ khác.");
+
+                    return View(DatLich);
+                }
+                var appointmentvalue = db.PhieuDatLich.Count(l => l.IdBenhNhan == id && l.Id_TKB.HasValue && l.NgayKham.HasValue && DbFunctions.TruncateTime(l.NgayKham) == DbFunctions.TruncateTime(DatLich.NgayKham));
+                if (appointmentvalue >= 1)
+                {
+                    ModelState.AddModelError("", "Bạn đã đặt lịch này. Vui lòng hủy lịch cũ nếu bạn muốn đặt lịch mới");
+
+                    return View(DatLich);
+                }
                 // Add the appointment to the database
                 db.PhieuDatLich.Add(DatLich);
                 db.SaveChanges();
-                if (DatLich.Id_hinhthuc == 1)
+                if (DatLich.Id_hinhthuc == 3)
                 {
-                    //DatLich.TrangThaiThanhToan = true; // Gán TrangThai là false
-                    return RedirectToAction("Payment", "Home", new { order = DatLich.Id_Phieudat });
+                    // Set TrangThaiThanhToan to true
+                    DatLich.TrangThaiThanhToan = true;
+                    // Update the appointment in the database
+                    db.Entry(DatLich).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 return RedirectToAction("Index", "QLBenhNhan");
             }
