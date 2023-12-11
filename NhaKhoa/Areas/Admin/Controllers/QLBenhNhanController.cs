@@ -29,7 +29,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 
-            // Lấy danh sách người dùng thuộc vai trò "NhanVien"
+            // Lấy danh sách người dùng thuộc vai trò "BenhNhan"
             var nhanVienUsers = userManager.Users.Where(u => u.Roles.Any(r => r.RoleId == "4")).ToList();
 
             return View(nhanVienUsers);

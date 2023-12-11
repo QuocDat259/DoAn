@@ -481,6 +481,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\Nhaisiimg\Boc-rang-su.jpg" />
+    <Content Include="img\Nhaisiimg\phong-kham-nha-khoa-quan-9-hinh-anh-6-6053.jpg" />
     <Content Include="img\Nhaisiimg\trung.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
