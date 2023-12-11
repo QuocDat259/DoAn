@@ -230,14 +230,15 @@
     <Compile Include="Models\AspNetUserClaims.cs" />
     <Compile Include="Models\AspNetUserLogins.cs" />
     <Compile Include="Models\AspNetUsers.cs" />
+    <Compile Include="Models\ChiTietThuoc.cs" />
     <Compile Include="Models\DanhGia.cs" />
     <Compile Include="Models\DanhGiaNhaSi.cs" />
     <Compile Include="Models\DichVu.cs" />
     <Compile Include="Models\DonThuoc.cs" />
     <Compile Include="Models\HinhThucThanhToan.cs" />
-    <Compile Include="Models\HoaDon.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\KhungGio.cs" />
+    <Compile Include="Models\LapDonThuocViewModel.cs" />
     <Compile Include="Models\ManageViewModel.cs" />
     <Compile Include="Models\NhaKhoaModel.cs" />
     <Compile Include="Models\PhieuDatLich.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\ThoiKhoaBieuViewModel.cs" />
     <Compile Include="Models\Thu.cs" />
     <Compile Include="Models\Thuoc.cs" />
+    <Compile Include="Models\ThuocCheckBox.cs" />
     <Compile Include="Models\TinTuc.cs" />
     <Compile Include="Others\Others\MoMoSecurity.cs" />
     <Compile Include="Others\Others\PaymentRequest.cs" />
@@ -883,6 +885,8 @@
     <Content Include="Views\Home\PaymentVNPayConfirm.cshtml" />
     <Content Include="Views\Home\ServiceDetail.cshtml" />
     <Content Include="Views\BookingDentist\Appointment.cshtml" />
+    <Content Include="Views\Home\Bill.cshtml" />
+    <Content Include="Views\Home\ChangeAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

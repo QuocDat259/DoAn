@@ -16,12 +16,12 @@ namespace NhaKhoa.Models
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<ChiTietThuoc> ChiTietThuoc { get; set; }
         public virtual DbSet<DanhGia> DanhGia { get; set; }
         public virtual DbSet<DanhGiaNhaSi> DanhGiaNhaSi { get; set; }
         public virtual DbSet<DichVu> DichVu { get; set; }
         public virtual DbSet<DonThuoc> DonThuoc { get; set; }
         public virtual DbSet<HinhThucThanhToan> HinhThucThanhToan { get; set; }
-        public virtual DbSet<HoaDon> HoaDon { get; set; }
         public virtual DbSet<KhungGio> KhungGio { get; set; }
         public virtual DbSet<PhieuDatLich> PhieuDatLich { get; set; }
         public virtual DbSet<Phong> Phong { get; set; }
@@ -53,11 +53,6 @@ namespace NhaKhoa.Models
                 .HasForeignKey(e => e.Id_Nhasi);
 
             modelBuilder.Entity<AspNetUsers>()
-                .HasMany(e => e.HoaDon)
-                .WithOptional(e => e.AspNetUsers)
-                .HasForeignKey(e => e.Id_benhnhan);
-
-            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.PhieuDatLich)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.IdBenhNhan);
@@ -73,9 +68,14 @@ namespace NhaKhoa.Models
                 .HasForeignKey(e => e.Id_Nhasi);
 
             modelBuilder.Entity<DonThuoc>()
-                .HasMany(e => e.Thuoc)
-                .WithMany(e => e.DonThuoc)
-                .Map(m => m.ToTable("ChiTietThuoc").MapLeftKey("Id_donthuoc").MapRightKey("Id_thuoc"));
+                .HasMany(e => e.ChiTietThuoc)
+                .WithRequired(e => e.DonThuoc)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Thuoc>()
+                .HasMany(e => e.ChiTietThuoc)
+                .WithRequired(e => e.Thuoc)
+                .WillCascadeOnDelete(false);
         }
     }
 }

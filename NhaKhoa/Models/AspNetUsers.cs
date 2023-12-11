@@ -14,7 +14,6 @@ namespace NhaKhoa.Models
             AspNetUserClaims = new HashSet<AspNetUserClaims>();
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             DanhGiaNhaSi = new HashSet<DanhGiaNhaSi>();
-            HoaDon = new HashSet<HoaDon>();
             PhieuDatLich = new HashSet<PhieuDatLich>();
             TinTuc = new HashSet<TinTuc>();
             ThoiKhoaBieu = new HashSet<ThoiKhoaBieu>();
@@ -77,9 +76,6 @@ namespace NhaKhoa.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DanhGiaNhaSi> DanhGiaNhaSi { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDon { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhieuDatLich> PhieuDatLich { get; set; }
