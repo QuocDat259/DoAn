@@ -136,7 +136,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 DonThuoc = new DonThuoc
                 {
                     Id_phieudat = id_phieudat,
-                    NgayGio = DateTime.Now,
+                    NgayGio = DateTime.Today,
                     // Initialize the total quantity to 0
                     Soluong = 0
                 },
@@ -145,7 +145,6 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
 
             return View(viewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LapDonThuoc(LapDonThuocViewModel viewModel)
@@ -212,7 +211,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 // Handle database update exceptions (e.g., unique constraint violation) more specifically
                 ModelState.AddModelError(string.Empty, "An error occurred while saving the prescription.");
             }
-            catch (Exception)
+            catch (Exception )
             {
                 // Handle other exceptions appropriately, log the error, etc.
                 ModelState.AddModelError(string.Empty, "An unexpected error occurred while saving the prescription.");
