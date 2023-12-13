@@ -3698,9 +3698,12 @@ a {
 @media (min-width: 64rem) {
     .js .cd-schedule__group > ul {
         height: 950px;
+        display: flex;
         height: calc(var(--schedule-rows-height)*var(--schedule-rows-number));
         overflow: visible;
-        padding: 0
+        padding: 0;
+        flex-wrap: wrap;
+        flex-direction: row;
     }
 
         .js .cd-schedule__group > ul::after {
@@ -3777,10 +3780,9 @@ a {
 
 @media (min-width: 64rem) {
     .js .cd-schedule__event {
-        position: absolute;
         z-index: 3;
-        width: calc(100% + 2px);
-        left: -1px;
+        flex: 1;
+        position: relative;
         max-width: none;
         margin-right: 0
     }
