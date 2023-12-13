@@ -170,57 +170,59 @@ namespace NhaKhoa.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
-        public ActionResult TKB(DateTime? selectedWeek)
+        public ActionResult TKB(DateTime? selectedWeek, string fullName)
         {
             try
             {
-                // Lấy danh sách các ngày trong tuần và lịch làm việc từ cơ sở dữ liệu
                 var danhSachThu = db.Thu.ToList();
-                var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.OrderBy(a => a.Id_Thu).ThenBy(a => a.NgayLamViec).ToList();
-
-                // Kiểm tra xem có dữ liệu để hiển thị không
-                if (danhSachThu.Any() && danhSachThoiKhoaBieu.Any())
+                var danhSachThoiKhoaBieu = db.ThoiKhoaBieu.OrderBy(e => e.Id_Thu).ThenBy(e => e.NgayLamViec).ToList();
+                ViewBag.FullNames = db.AspNetUsers
+                .Where(u => u.AspNetRoles.Any(r => r.Name == "NhaSi"))  // Adjust this condition based on your actual data model
+                .Select(user => user.FullName)
+                .Distinct()
+                .ToList();
+                ViewBag.fullName = fullName;
+                if (danhSachThu.Any() || danhSachThoiKhoaBieu.Any())
                 {
                     var now = DateTime.Now;
                     var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
                     var monday = now.AddDays(-daysUntilMonday);
                     DateTime startOfWeek = selectedWeek ?? monday;
 
-                    // Nếu có tuần đã chọn, lọc danh sách thời khóa biểu cho tuần đó
-                    var filteredThoiKhoaBieu = danhSachThoiKhoaBieu
-                        .Where(tkb => tkb.NgayLamViec.HasValue && tkb.NgayLamViec.Value.Date == startOfWeek.Date)
+                    // Simplify the logic for filtering danhSachThoiKhoaBieu
+                    danhSachThoiKhoaBieu = danhSachThoiKhoaBieu
+                        .Where(tkb => tkb.NgayLamViec.HasValue && tkb.NgayLamViec.Value.Date == startOfWeek.Date &&
+                                      (string.IsNullOrEmpty(fullName) || tkb.AspNetUsers.FullName == fullName))
                         .OrderBy(e => e.Id_Thu)
                         .ThenBy(e => e.NgayLamViec)
                         .ToList();
 
-                    // Lấy calendar hiện tại (GregorianCalendar)
                     GregorianCalendar calendar = new GregorianCalendar();
-
-                    // Tạo mảng chứa các tuần
                     DateTime[] weeks = GetWeeksInYear(startOfWeek.Year, calendar);
 
-                    // Tạo ViewModel
+                    if (startOfWeek.Year > DateTime.Now.Year + 1)
+                    {
+                        return RedirectToAction("TKB", "QLNhaSi");
+                    }
+
                     var viewModel = new ThoiKhoaBieuViewModel
                     {
                         DanhSachThu = danhSachThu,
-                        DanhSachThoiKhoaBieu = filteredThoiKhoaBieu,
+                        DanhSachThoiKhoaBieu = danhSachThoiKhoaBieu,
                         weeks = weeks,
                         SelectedWeek = startOfWeek
                     };
 
-                    // Trả về view với ViewModel
                     return View(viewModel);
                 }
                 else
                 {
-                    // Nếu không có dữ liệu, hiển thị thông báo lỗi
                     ViewBag.ErrorMessage = "Không có dữ liệu để hiển thị.";
                     return View("ErrorView");
                 }
             }
             catch (Exception ex)
             {
-                // Log exception
                 ViewBag.ErrorMessage = $"Đã xảy ra lỗi khi lấy dữ liệu: {ex.Message}";
                 return View("ErrorView");
             }
