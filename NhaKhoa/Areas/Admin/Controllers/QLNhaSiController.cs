@@ -320,11 +320,6 @@ namespace NhaKhoa.Areas.Admin.Controllers
                     return AddValidationErrorAndReturnView("Vui lòng chọn Nha Sĩ", thoiKhoaBieu);
                 }
 
-                if (thoiKhoaBieu.Id_Nhasi != thoiKhoaBieu.Id_Phong.ToString())
-                {
-                    return AddValidationErrorAndReturnView("Nha sĩ và phòng dã bị trùng", thoiKhoaBieu);
-                }
-
                 if (thoiKhoaBieu.Id_Phong == null)
                 {
                     return AddValidationErrorAndReturnView("Vui lòng chọn phòng làm việc", thoiKhoaBieu);

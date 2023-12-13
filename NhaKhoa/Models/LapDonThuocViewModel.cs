@@ -9,5 +9,6 @@ namespace NhaKhoa.Models
     {
         public DonThuoc DonThuoc { get; set; }
         public List<ThuocCheckBox> Thuocs { get; set; }
+
     }
 }
