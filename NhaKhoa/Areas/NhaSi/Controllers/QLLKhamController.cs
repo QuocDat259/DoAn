@@ -127,7 +127,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 {
                     Id_thuoc = t.Id_thuoc,
                     Tenthuoc = t.Tenthuoc,
-                    SoLuong = (int)t.Soluong,
+                    Selected = false
                 })
                 .ToList();
 
@@ -158,7 +158,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                     {
                         Id_thuoc = t.Id_thuoc,
                         Tenthuoc = t.Tenthuoc,
-                        SoLuong = (int)t.Soluong,
+                        Selected = false
                     })
                     .ToList();
 

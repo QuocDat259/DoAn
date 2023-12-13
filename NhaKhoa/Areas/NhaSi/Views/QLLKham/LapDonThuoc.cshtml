@@ -1,4 +1,4 @@
-﻿@model NhaKhoa.Models.LapDonThuocViewModel
+﻿﻿@model NhaKhoa.Models.LapDonThuocViewModel
 
 @{
     ViewBag.Title = "LapDonThuoc";
@@ -7,34 +7,51 @@
 
 <h2>LapDonThuoc</h2>
 
-<div class="form-group">
-    <label for="searchMedicine">Tìm kiếm thuốc:</label>
-    <input type="text" id="searchMedicine" class="form-control" />
-</div>
+@using (Html.BeginForm("LapDonThuoc", "QLLKham", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.DonThuoc.Id_phieudat)
 
-<!-- Hiển thị kết quả tìm kiếm -->
-<div id="searchResults" style="display:none;">
-    <ul id="medicineList"></ul>
-</div>
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.DonThuoc.NgayGio, "Date") <!-- Corrected label -->
+        @Html.EditorFor(model => model.DonThuoc.NgayGio, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DonThuoc.NgayGio, "", new { @class = "text-danger" })
+    </div>
 
-<div class="form-group">
-    <label for="selectedMedicines">Thuốc đã chọn:</label>
-    <table id="selectedMedicinesTable" class="table">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>Tên Thuốc</th>
-                <th>Số Lượng</th>
-                <!--Thêm các cột khác cần thiết-->
-            </tr>
-        </thead>
-        <tbody id="selectedMedicinesList"></tbody>
-    </table>
-</div>
+    <div class="form-group">
+        <label>Chọn thuốc:</label>
+        @for (int i = 0; i < Model.Thuocs.Count; i++)
+        {
+            <div class="checkbox">
+                <label>
+                    @Html.CheckBoxFor(m => Model.Thuocs[i].Selected, new { id = $"Thuocs_{i}_Selected" }) @Model.Thuocs[i].Tenthuoc
+                    @Html.HiddenFor(m => Model.Thuocs[i].Id_thuoc)
+                    @Html.TextBoxFor(m => Model.Thuocs[i].SoLuong, new { @class = "form-control quantity-input", placeholder = "Quantity" })
+                    @Html.ValidationMessageFor(m => Model.Thuocs[i].SoLuong, "", new { @class = "text-danger" })
+                </label>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DonThuoc.Chandoan, "Chẩn đoán")
+        @Html.EditorFor(model => model.DonThuoc.Chandoan, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.DonThuoc.Chandoan, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DonThuoc.Soluong, "Total Quantity")
+        @Html.EditorFor(model => model.DonThuoc.Soluong, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @Html.ValidationMessageFor(model => model.DonThuoc.Soluong, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group" hidden>
+        @Html.LabelFor(model => model.DonThuoc.TongTien, "Total Cost") <!-- Corrected label -->
+        @Html.EditorFor(model => model.DonThuoc.TongTien, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @Html.ValidationMessageFor(model => model.DonThuoc.TongTien, "", new { @class = "text-danger" })
+    </div>
 
-<div class="form-group">
-    <input type="submit" value="Create Prescription" class="btn btn-primary" />
-</div>
+    <div class="form-group">
+        <input type="submit" value="Create Prescription" class="btn btn-primary" />
+    </div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -58,61 +75,6 @@
 
                 $("#DonThuoc_Soluong").val(totalQuantity);
             }
-        });
-
-        var selectedMedicines = [];
-
-        window.saveToTable = function (medicineId) {
-            $.ajax({
-                url: "/QLLKham/SaveToTable",
-                method: "POST",
-                data: { medicineId: medicineId },
-                success: function (data) {
-                    if (!isMedicineAlreadySelected(data.Id_thuoc)) {
-                        selectedMedicines.push(data);
-                        updateSelectedMedicinesCount();
-                        updateSelectedMedicinesList();
-                    }
-                }
-            });
-        };
-
-        function isMedicineAlreadySelected(medicineId) {
-            return selectedMedicines.some(function (medicine) {
-                return medicine.Id_thuoc === medicineId;
-            });
-        }
-
-        function updateSelectedMedicinesCount() {
-            var selectedCount = selectedMedicines.length;
-            $("#DonThuoc_Soluong").val(selectedCount);
-        }
-
-        function updateSelectedMedicinesList() {
-            var $list = $("#selectedMedicinesList");
-            $list.empty();
-
-            $.each(selectedMedicines, function (index, medicine) {
-                $list.append("<tr><td>" + (index + 1) + "</td><td>" + medicine.Tenthuoc + "</td><td>" + medicine.SoLuong + "</td></tr>");
-            });
-        }
-
-        $("#searchMedicine").on("keyup", function () {
-            var searchTerm = $(this).val();
-
-            $.ajax({
-                url: "/QLLKham/SearchMedicine",
-                method: "POST",
-                data: { searchTerm: searchTerm },
-                success: function (data) {
-                    $("#medicineList").empty();
-                    $.each(data, function (index, item) {
-                        $("#medicineList").append('<li><a href="#" onclick="saveToTable(' + item.Id_thuoc + ')">' + item.Tenthuoc + '</a></li>');
-                    });
-
-                    $("#searchResults").show();
-                }
-            });
         });
     </script>
 }
