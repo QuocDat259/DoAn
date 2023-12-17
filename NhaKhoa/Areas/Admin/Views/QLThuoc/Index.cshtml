@@ -7,10 +7,17 @@
 
 <h2 class="text-center">Quản lí thuốc</h2>
 
+<h2 class="text-center">Xuất danh sách thuốc ra Excel</h2>
+<p>
+    <button>
+        @Html.ActionLink("Export Excel", "ExportToExcel", null, new { @class = "btn btn-success" })
+    </button>
+</p>
+
 <p class="text-center">
     <button class="btn btn-success">
         @Html.ActionLink("Thêm thuốc mới", "Create")
-    </button> 
+    </button>
 </p>
 <table class="table table-striped table-bordered">
     <tr>
