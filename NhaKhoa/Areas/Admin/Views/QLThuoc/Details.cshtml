@@ -5,71 +5,64 @@
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center">Chi tiết thuốc</h2>
+            <hr />
 
-<div>
-    <h4>Thuoc</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Tenthuoc)
-        </dt>
+            <dl class="row">
+                <dt class="col-sm-3">Tên thuốc:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Tenthuoc)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tenthuoc)
-        </dd>
+                <dt class="col-sm-3">Mô tả:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Mota)</dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Mota)
-        </dt>
+                <dt class="col-sm-3">Giá:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Gia)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Mota)
-        </dd>
+                <dt class="col-sm-3">Ngày sản xuất:</dt>
+                <dd class="col-sm-9">
+                    @{
+                        var ngaySX = Model.NgaySX;
+                        if (ngaySX.HasValue)
+                        {
+                            @ngaySX.Value.ToString("dd-MM-yyyy")
+                        }
+                        else
+                        {
+                            <text>N/A</text>
+                        }
+                    }
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gia)
-        </dt>
+                <dt class="col-sm-3">Hạn sử dụng:</dt>
+                <dd class="col-sm-9">
+                    @{
+                        var hanSD = Model.HanSD;
+                        if (hanSD.HasValue)
+                        {
+                            @hanSD.Value.ToString("dd-MM-yyyy")
+                        }
+                        else
+                        {
+                            <text>N/A</text>
+                        }
+                    }
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gia)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NgaySX)
-        </dt>
+                <dt class="col-sm-3">Số lượng:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Soluong)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.NgaySX)
-        </dd>
+                <dt class="col-sm-3">Thành phần:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Thanhphan)</dd>
+            </dl>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HanSD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HanSD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Soluong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Soluong)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Thanhphan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Thanhphan)
-        </dd>
-
-    </dl>
+    <div class="text-center mt-3">
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.Id_thuoc }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Quay lại trang", "Index", new { @class = "btn btn-default" })
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_thuoc }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
