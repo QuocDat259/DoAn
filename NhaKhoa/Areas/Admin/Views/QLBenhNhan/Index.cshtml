@@ -7,9 +7,12 @@
 
 <h2 class="text-center">Quản lí bệnh nhân</h2>
 
-<button class="btn btn-primary btn-create-new">
-    @Html.ActionLink("Tạo tài khoản", "Create")
-</button>
+<h2 class="text-center">
+    <button class="btn btn-primary btn-create-new">
+        @Html.ActionLink("Tạo tài khoản", "Create")
+    </button>
+</h2>
+
 <table class="table table-striped table-bordered">
     <tr>
         <th>
@@ -66,7 +69,10 @@
                 @Html.DisplayFor(modelItem => item.DiaChi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
+                @if (item.NgaySinh != null)
+                {
+                    @item.NgaySinh.ToString("dd/MM/yyyy")
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NgheNghiep)

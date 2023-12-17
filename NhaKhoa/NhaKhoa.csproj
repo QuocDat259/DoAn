@@ -206,6 +206,7 @@
     <Compile Include="Areas\Admin\Controllers\QLNhanVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLNhaSiController.cs" />
     <Compile Include="Areas\Admin\Controllers\QLTinTucController.cs" />
+    <Compile Include="Areas\Admin\Controllers\QLThuocController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\InfoNVController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\QLBenhNhanController.cs" />
@@ -818,6 +819,11 @@
     <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\DoanThuBanThuoc\Index.cshtml" />
     <Content Include="Areas\NhaSi\Views\QLLKham\SearchMedicine.cshtml" />
+    <Content Include="Areas\Admin\Views\QLThuoc\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\QLThuoc\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\QLThuoc\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\QLThuoc\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\QLThuoc\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

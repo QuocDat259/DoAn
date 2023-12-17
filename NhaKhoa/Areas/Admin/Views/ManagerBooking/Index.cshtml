@@ -5,8 +5,8 @@
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
 }
 
-<h2>Trang Quản Lý Lịch Khám Admin</h2>
-<div class="payment-buttons">
+<h2 class="text-center">Trang Quản Lý Lịch Khám Admin</h2>
+<div class="payment-buttons text-center">
     <a class="btn btn-success" href="@Url.Action("Index", "ManagerBooking")" data-filter="da-xac-nhan">Đã khám</a>
     <a class="btn btn-danger" href="@Url.Action("Index", "ManagerBooking")" data-filter="chua-xac-nhan">Chưa khám</a>
     <a class="btn btn-primary" id="btnXemTatCa">Xem tất cả</a>
