@@ -75,7 +75,7 @@
 			var eventTop = slotHeight*(start - self.timelineStart)/self.timelineUnitDuration,
 				eventHeight = slotHeight*duration/self.timelineUnitDuration;
 
-			this.singleEvents[i].setAttribute('style', 'top: '+(eventTop-1)+'px; height: '+(eventHeight +1)+'px');
+			this.singleEvents[i].setAttribute('style', 'height: '+(eventHeight +1)+'px');
 		}
 
 		Util.removeClass(this.element, 'cd-schedule--loading');
