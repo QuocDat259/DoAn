@@ -73,14 +73,27 @@
 				duration = getScheduleTimestamp(anchor.getAttribute('data-end')) - start;
 
 			var eventTop = slotHeight*(start - self.timelineStart)/self.timelineUnitDuration,
-				eventHeight = slotHeight*duration/self.timelineUnitDuration;
-
-			this.singleEvents[i].setAttribute('style', 'height: '+(eventHeight +1)+'px');
+				eventHeight = slotHeight * duration / self.timelineUnitDuration;
+			var event = anchor.getAttribute('data-content');
+			if (event === "event-1" || event === "event-2") {
+				if (start === 780) {
+					// N?u giá tr? th?i gian là 13:00:00, th?c hi?n các thay ð?i
+					this.singleEvents[i].setAttribute('style', 'top: 397px; height: ' + (eventHeight + 1) + 'px');
+				} else {
+					this.singleEvents[i].setAttribute('style', 'top: ' + (eventTop - 1) + 'px; height: ' + (eventHeight + 1) + 'px');
+				}
+			} else {
+				if (start === 780) {
+					// N?u giá tr? th?i gian là 13:00:00, th?c hi?n các thay ð?i
+					this.singleEvents[i].setAttribute('style', 'top: 22px; height: ' + (eventHeight + 1) + 'px');
+				} else {
+					this.singleEvents[i].setAttribute('style', 'top: ' + (eventTop - 1) + 'px; height: ' + (eventHeight + 1) + 'px');
+				}
+            }
+			
 		}
-
 		Util.removeClass(this.element, 'cd-schedule--loading');
 	};
-
 	ScheduleTemplate.prototype.initEvents = function() {
 		var self = this;
 		for(var i = 0; i < this.singleEvents.length; i++) {
@@ -100,7 +113,6 @@
 			if( !self.animating ) self.closeModal();
 		});
 	};
-
 	ScheduleTemplate.prototype.openModal = function(target) {
 		var self = this;
 		var mq = self.mq();

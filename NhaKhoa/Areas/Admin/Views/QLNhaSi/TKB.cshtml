@@ -7,6 +7,7 @@
     Layout = "~/Areas/Admin/Views/Shared/Layout.cshtml";
     var now = DateTime.Now;
     int counter = 1;
+    int eday = 1;
     var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
     var monday = now.AddDays(-daysUntilMonday);
     var sunday = monday.AddDays(6);
@@ -95,18 +96,22 @@
                     {
                         <li class="cd-schedule__group">
                             <div class="cd-schedule__top-info"><span>@day.TenThu</span></div>
-                            <ul>
+                            @{string ThuMau = day.TenThu;}
+                            <ul id="idlich">
+
                                 @foreach (var eventItem in day.ThoiKhoaBieu
-                                .Where(e => e.NgayLamViec.HasValue &&
-                                                 e.NgayLamViec.Value.Date >= selectedWeekStartDate &&
-                                                 e.NgayLamViec.Value.Date <= selectedWeekEndDate &&
-                                                 (string.IsNullOrEmpty(ViewBag.fullName) || e.AspNetUsers.FullName == ViewBag.fullName))
-                                .OrderBy(e => e.NgayLamViec))
+                                    .Where(e => e.NgayLamViec.HasValue &&
+                                    e.NgayLamViec.Value.Date >= selectedWeekStartDate &&
+                                    e.NgayLamViec.Value.Date <= selectedWeekEndDate &&
+                                    (string.IsNullOrEmpty(ViewBag.fullName) || e.AspNetUsers.FullName == ViewBag.fullName))
+                                    .OrderBy(e => e.NgayLamViec))
                                 {
                                     var uniqueEventId = $"event-{counter}";
                                     counter++;
+                                    var uniqueEventIdDay = $"event-{eday}";
+                                    eday++;
                                     <li class="cd-schedule__event">
-                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="@uniqueEventId">
+                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="@uniqueEventId" data-content="@uniqueEventIdDay">
                                             <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
                                             <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
                                             @if (eventItem.NgayLamViec.HasValue)
@@ -116,7 +121,9 @@
                                         </a>
                                     </li>
                                 }
-
+                                @{
+                                    eday = 1;
+                                }
 
                             </ul>
                         </li>
