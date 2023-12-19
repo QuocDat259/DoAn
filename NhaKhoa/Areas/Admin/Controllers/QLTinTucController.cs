@@ -14,6 +14,7 @@ using PagedList;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QLTinTucController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();

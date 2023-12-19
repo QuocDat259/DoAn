@@ -12,6 +12,7 @@ using NhaKhoa.Models;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class QLThuocController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();

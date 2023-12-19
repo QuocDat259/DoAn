@@ -10,6 +10,7 @@ using NhaKhoa.Models;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DoanThuBanThuocController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();

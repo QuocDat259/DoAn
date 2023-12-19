@@ -11,6 +11,7 @@ using PagedList;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class DoanhThuLichKhamController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();

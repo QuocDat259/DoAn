@@ -14,6 +14,7 @@ using SendGrid.Helpers.Mail;
 
 namespace NhaKhoa.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ManagerBookingController : Controller
     {
         private NhaKhoaModel db = new NhaKhoaModel();
