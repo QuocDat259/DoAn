@@ -21,7 +21,6 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
             // Lấy thông tin người dùng đã đăng nhập
             var userId = User.Identity.GetUserId();
             var user = db.AspNetUsers.Find(userId);
-
             if (user != null)
             {
                 // Lấy thông tin người dùng thành công, bạn có thể sử dụng nó trong view
@@ -30,7 +29,7 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
                 ViewBag.Email = user.Email;
                 return View(user);
             }
-            return View();
+            return RedirectToAction("Login", "Account"); // Chuyển hướng đến trang đăng nhập nếu không tìm thấy thông tin người dùng.
         }
 
         [HttpGet]

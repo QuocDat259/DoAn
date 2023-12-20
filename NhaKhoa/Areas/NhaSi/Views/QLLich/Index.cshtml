@@ -4,6 +4,8 @@
     ViewBag.Title = "TKB";
     Layout = "~/Areas/NhaSi/Views/Shared/Layout.cshtml";
     var now = DateTime.Now;
+    int counter = 1;
+    int eday = 1;
     var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
     var monday = now.AddDays(-daysUntilMonday);
     var sunday = monday.AddDays(6);
@@ -12,25 +14,39 @@
 
 <header class="cd-main-header text-center flex flex-column flex-center">
     <h1 class="text-xl">THỜI GIAN BIỂU</h1>
-    <a href="@Url.Action("ViewCalendar","QLLich","NhaSi")"> Xem tất cả lịch</a>
-
+    <button onclick="window.location.href='@Url.Action("ViewCalendar", "QLLich", "NhaSi")'" class="custom-button">Xem tất cả lịch</button>
 </header>
 
-<button id="prevWeek">Tuần Trước</button>
-<label for="weekSelect">Chọn Tuần:</label>
-<select id="weekSelect">
-    @foreach (var week in Model.weeks)
-    {
-        numberweek++;
-        var startOfWeek = week;
-        var endOfWeek = week.AddDays(6);
-        <option value="@startOfWeek.ToString("yyyy-MM-dd")"
-                @(startOfWeek.Date <= Model.SelectedWeek.Date && Model.SelectedWeek.Date <= endOfWeek.Date ? "selected" : "")>
-            Tuần @numberweek: @startOfWeek.ToString("dd/MM/yyyy") - @endOfWeek.ToString("dd/MM/yyyy")
-        </option>
-    }
-</select>
-<button id="nextWeek">Tuần Tiếp</button>
+<div style="text-align:center; margin:auto; padding:10px">
+    <button id="prevWeek">Tuần Trước</button>
+    <label for="weekSelect">Chọn Tuần:</label>
+    <select id="weekSelect">
+        @foreach (var week in Model.weeks)
+        {
+            numberweek++;
+            var startOfWeek = week;
+            var endOfWeek = week.AddDays(6);
+
+            if (startOfWeek.Year >= DateTime.Now.Year && startOfWeek.Year <= DateTime.Now.Year + 1)
+            {
+                <option value="@startOfWeek.ToString("yyyy-MM-dd")"
+                        @(startOfWeek.Date <= Model.SelectedWeek.Date && Model.SelectedWeek.Date <= endOfWeek.Date ? "selected" : "")>
+                    Tuần @numberweek: @startOfWeek.ToString("dd/MM/yyyy") - @endOfWeek.ToString("dd/MM/yyyy")
+                </option>
+            }
+        }
+
+        @if (Model.SelectedWeek.Year > DateTime.Now.Year + 1)
+        {
+            <option value="@Model.SelectedWeek.ToString("yyyy-MM-dd")" selected disabled hidden>
+                Chọn tuần: Không thể chọn năm sau
+            </option>
+        }
+    </select>
+    <button id="nextWeek">Tuần Tiếp</button>
+</div>
+
+
 <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
     @if (Model.DanhSachThu.Any())
     {
@@ -69,6 +85,7 @@
                     {
                         <li class="cd-schedule__group">
                             <div class="cd-schedule__top-info"><span>@day.TenThu</span></div>
+                            @{string ThuMau = day.TenThu;}
                             <ul>
                                 @foreach (var eventItem in day.ThoiKhoaBieu
                                     .Where(e => e.NgayLamViec.HasValue &&
@@ -77,8 +94,13 @@
                                                 e.Id_Nhasi == ViewBag.CurrentUserId)  // Filter by Id_Nhasi)
                                     .OrderBy(e => e.NgayLamViec))
                                 {
+                                    var uniqueEventId = $"event-{counter}";
+                                    counter++;
+                                    var uniqueEventIdDay = $"event-{eday}";
+                                    eday++;
                                     <li class="cd-schedule__event">
-                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="event-4">
+
+                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="@uniqueEventId" data-content="@uniqueEventIdDay">
                                             <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
                                             <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
                                             @if (eventItem.NgayLamViec.HasValue)
@@ -88,6 +110,9 @@
                                         </a>
                                         <a class="cd-schedule-modal__edit" data-tkbid="@eventItem.Id_TKB"> thay đổi lịch khám</a>
                                     </li>
+                                }
+                                @{
+                                    eday = 1;
                                 }
                             </ul>
                         </li>
@@ -122,14 +147,13 @@
     <div class="cd-schedule__cover-layer"></div>
 </div>
 <!-- Your existing code ... -->
-<script src="~/Areas/assetTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-<script src="~/Areas/assetTKB/js/main.js"></script>
-
+<script src="~/Areas/NhaSi/assetTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+<script src="~/Areas/NhaSi/assetTKB/js/main.js"></script>
 
 @section scripts {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="~/Areas/assetTKB/js/util.js"></script>
-    <script src="~/Areas/assetTKB/js/main.js"></script>
+    <script src="~/Areas/NhaSi/assetTKB/js/util.js"></script>
+    <script src="~/Areas/NhaSi/assetTKB/js/main.js"></script>
     <script>
         $(document).ready(function () {
             $('#weekSelect').change(function () {

@@ -1,4 +1,4 @@
-﻿﻿@model NhaKhoa.Models.AspNetUser
+﻿@model NhaKhoa.Models.AspNetUsers
 
 @{
     ViewBag.Title = "Thông tin nhân viên";
@@ -9,81 +9,29 @@
 
 <table class="table">
     <tr>
-        <th>
-            Email
-        </th>
-        <!-- Thêm các cột thông tin khác về nhân viên  -->
+        <th>Email</th>
+        <td>@Model.Email</td>
     </tr>
     <tr>
-        <td>
-            @Html.DisplayFor(model => model.Email)
-        </td>
-        <!-- Hiển thị các thông tin khác về nhân viên -->
+        <th>Tên nhân viên</th>
+        <td>@Model.FullName</td>
     </tr>
     <tr>
-        <th>
-            Tên
-        </th>
-
-        <!-- Thêm các cột thông tin khác về nha sĩ -->
+        <th>Số điện thoại</th>
+        <td>@Model.PhoneNumber</td>
     </tr>
     <tr>
-        <td>
-            @Html.DisplayFor(model => model.FullName)
-        </td>
-        <!-- Hiển thị các thông tin khác về nha sĩ -->
+        <th>Ngày sinh</th>
+        <td>@Model.Ngaysinh</td>
     </tr>
     <tr>
-        <th>
-            SDT
-        </th>
-
-        <!-- Thêm các cột thông tin khác về nha sĩ -->
+        <th>Nghe nghiệp</th>
+        <td>@Model.NgheNghiep</td>
     </tr>
     <tr>
-        <td>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </td>
-        <!-- Hiển thị các thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <th>
-            Ngay Sinh
-        </th>
-
-        <!-- Thêm các cột thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.Ngaysinh)
-        </td>
-        <!-- Hiển thị các thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <th>
-            Nghe Nghiep
-        </th>
-
-        <!-- Thêm các cột thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.NgheNghiep)
-        </td>
-        <!-- Hiển thị các thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <th>
-            Bằng cấp
-        </th>
-
-        <!-- Thêm các cột thông tin khác về nha sĩ -->
-    </tr>
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.Bangcap)
-        </td>
-        <!-- Hiển thị các thông tin khác về nha sĩ -->
+        <th>Bằng cấp</th>
+        <td>@Model.Bangcap</td>
     </tr>
 </table>
-@Html.ActionLink("Chỉnh sửa thông tin", "Edit")
+
+@Html.ActionLink("Chỉnh sửa thông tin", "Edit", new { id = Model.Id })

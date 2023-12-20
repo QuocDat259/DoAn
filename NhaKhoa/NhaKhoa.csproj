@@ -286,6 +286,7 @@
     <Compile Include="Areas\NhanVien\Controllers\QLBenhNhanController.cs" />
     <Compile Include="Areas\NhanVien\Controllers\QLLichKhamController.cs" />
     <Compile Include="Areas\NhanVien\NhanVienAreaRegistration.cs" />
+    <Compile Include="Areas\NhaSi\Controllers\DonThuocController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\InfoController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\NhaSiController.cs" />
     <Compile Include="Areas\NhaSi\Controllers\QLLichController.cs" />
@@ -433,6 +434,9 @@
     <Content Include="Areas\assets\js\plugins\smooth-scrollbar.min.js" />
     <Content Include="Areas\assets\js\soft-ui-dashboard.js" />
     <Content Include="Areas\assets\js\soft-ui-dashboard.min.js" />
+    <Content Include="Areas\NhaSi\assetTKB\css\style.css" />
+    <Content Include="Areas\NhaSi\assetTKB\js\main.js" />
+    <Content Include="Areas\NhaSi\assetTKB\js\util.js" />
     <Content Include="Areas\NhaSi\assets\css\style.css" />
     <Content Include="Areas\NhaSi\assets\images\dashboard\circle.png" />
     <Content Include="Areas\NhaSi\assets\images\dashboard\circle.svg" />
@@ -898,6 +902,9 @@
     <Content Include="Areas\Admin\Views\QLThuoc\Details.cshtml" />
     <Content Include="Areas\Admin\Views\QLThuoc\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\QLThuoc\Index.cshtml" />
+    <Content Include="Areas\NhaSi\Views\DonThuoc\Details.cshtml" />
+    <Content Include="Areas\NhaSi\Views\DonThuoc\Index.cshtml" />
+    <Content Include="Areas\NhaSi\assetTKB\css\style.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

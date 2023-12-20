@@ -9,13 +9,11 @@ using System.Web;
 using System.Web.Mvc;
 using BotDetect.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using NhaKhoa.Models;
 
 namespace NhaKhoa.Areas.NhanVien.Controllers
 {
-    [Authorize]
     public class QLBenhNhanController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -56,10 +54,13 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
         }
         private NhaKhoaModel db = new NhaKhoaModel();
 
-        // GET: NhanVien/QLBenhNhan
+        // GET: NhanVien/QLYNVien
         public ActionResult Index()
         {
-
+            // Lấy thông tin người dùng đã đăng nhập
+            var userId = User.Identity.GetUserId();
+            var user = db.AspNetUsers.Find(userId);
+            ViewBag.TenNhanVien = user.FullName;
             // Truy vấn cơ sở dữ liệu để lấy thông tin bệnh nhân kết hợp thông tin người dùng và vai trò
             var benhNhanList = db.AspNetUsers
                 .Where(u => u.AspNetRoles.Any(r => r.Id == "4"))
@@ -68,7 +69,6 @@ namespace NhaKhoa.Areas.NhanVien.Controllers
             // Truyền danh sách thông tin bệnh nhân cho view
             return View(benhNhanList);
         }
-
 
         // GET: NhanVien/QLBenhNhan/Details/5
         public ActionResult Details(string id)

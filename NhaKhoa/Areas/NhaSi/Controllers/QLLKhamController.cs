@@ -136,7 +136,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 DonThuoc = new DonThuoc
                 {
                     Id_phieudat = id_phieudat,
-                    NgayGio = DateTime.Today,
+                    NgayGio = DateTime.Now,
                     // Initialize the total quantity to 0
                     Soluong = 0
                 },
@@ -211,7 +211,7 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
                 // Handle database update exceptions (e.g., unique constraint violation) more specifically
                 ModelState.AddModelError(string.Empty, "An error occurred while saving the prescription.");
             }
-            catch (Exception )
+            catch (Exception)
             {
                 // Handle other exceptions appropriately, log the error, etc.
                 ModelState.AddModelError(string.Empty, "An unexpected error occurred while saving the prescription.");
@@ -230,43 +230,8 @@ namespace NhaKhoa.Areas.NhaSi.Controllers
             return View(viewModel);
         }
 
-        public ActionResult SearchMedicine(string searchTerm)
-        {
-            // Thực hiện tìm kiếm thuốc dựa trên searchTerm
-            var searchResults = db.Thuoc
-                .Where(t => t.Tenthuoc.Contains(searchTerm))
-                .Select(t => new
-                {
-                    Id_thuoc = t.Id_thuoc,
-                    Tenthuoc = t.Tenthuoc
-                })
-                .ToList();
 
-            return Json(searchResults, JsonRequestBehavior.AllowGet);
-        }
 
-        [HttpPost]
-        public ActionResult SaveToTable(int medicineId)
-        {
-            // Lấy thông tin thuốc từ cơ sở dữ liệu
-            Thuoc thuoc = db.Thuoc.Find(medicineId);
-
-            if (thuoc == null)
-            {
-                // Trả về lỗi nếu không tìm thấy thuốc
-                return HttpNotFound();
-            }
-
-            // Chú ý: Dưới đây là nơi bạn có thể thêm các logic xử lý khác, nếu cần
-
-            // Trả về thông tin thuốc dưới dạng JSON để sử dụng trong JavaScript
-            return Json(new
-            {
-                Id_thuoc = thuoc.Id_thuoc,
-                Tenthuoc = thuoc.Tenthuoc,
-                //Thêm các thuộc tính khác cần thiết
-            });
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

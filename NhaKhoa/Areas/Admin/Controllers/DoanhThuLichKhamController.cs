@@ -46,7 +46,7 @@ namespace NhaKhoa.Areas.Admin.Controllers
             ViewBag.FullNameBenhNhan = benhNhanDict;
 
             // Lấy giá trị của thuộc tính Gia và tính tổng
-            double DoanhThu = phieuDatLich.Sum(p => p.Gia ?? 0);
+            double? DoanhThu = phieuDatLich.Sum(p => p.Gia ?? 0);
 
             // Truyền giá trị tổng vào ViewBag
             ViewBag.DoanhThu = DoanhThu;

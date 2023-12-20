@@ -5,6 +5,7 @@
     Layout = "~/Areas/NhaSi/Views/Shared/Layout.cshtml";
     var now = DateTime.Now;
     int counter = 1;
+    int eday = 1;
     var daysUntilMonday = ((int)now.DayOfWeek - (int)DayOfWeek.Monday + 7) % 7;
     var monday = now.AddDays(-daysUntilMonday);
     var sunday = monday.AddDays(6);
@@ -12,25 +13,38 @@
 }
 <header class="cd-main-header text-center flex flex-column flex-center">
     <h1 class="text-xl">THỜI GIAN BIỂU</h1>
-    <a href="@Url.Action("Index","QLLich","NhaSi")">Quay lai</a>
+    <button onclick="window.location.href='@Url.Action("Index", "QLLich", "NhaSi")'" class="custom-button">Quay lại</button>
 </header>
 
+<div style="text-align:center; margin:auto; padding:10px">
+    <button id="prevWeek">Tuần Trước</button>
+    <label for="weekSelect">Chọn Tuần:</label>
+    <select id="weekSelect">
+        @foreach (var week in Model.weeks)
+        {
+            numberweek++;
+            var startOfWeek = week;
+            var endOfWeek = week.AddDays(6);
 
-<button id="prevWeek">Tuần Trước</button>
-<label for="weekSelect">Chọn Tuần:</label>
-<select id="weekSelect">
-    @foreach (var week in Model.weeks)
-    {
-        numberweek++;
-        var startOfWeek = week;
-        var endOfWeek = week.AddDays(6);
-        <option value="@startOfWeek.ToString("yyyy-MM-dd")"
-                @(startOfWeek.Date <= Model.SelectedWeek.Date && Model.SelectedWeek.Date <= endOfWeek.Date ? "selected" : "")>
-            Tuần @numberweek: @startOfWeek.ToString("dd/MM/yyyy") - @endOfWeek.ToString("dd/MM/yyyy")
-        </option>
-    }
-</select>
-<button id="nextWeek">Tuần Tiếp</button>
+            if (startOfWeek.Year >= DateTime.Now.Year && startOfWeek.Year <= DateTime.Now.Year + 1)
+            {
+                <option value="@startOfWeek.ToString("yyyy-MM-dd")"
+                        @(startOfWeek.Date <= Model.SelectedWeek.Date && Model.SelectedWeek.Date <= endOfWeek.Date ? "selected" : "")>
+                    Tuần @numberweek: @startOfWeek.ToString("dd/MM/yyyy") - @endOfWeek.ToString("dd/MM/yyyy")
+                </option>
+            }
+        }
+
+        @if (Model.SelectedWeek.Year > DateTime.Now.Year + 1)
+        {
+            <option value="@Model.SelectedWeek.ToString("yyyy-MM-dd")" selected disabled hidden>
+                Chọn tuần: Không thể chọn năm sau
+            </option>
+        }
+    </select>
+    <button id="nextWeek">Tuần Tiếp</button>
+</div>
+
 <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
     @if (Model.DanhSachThu.Any())
     {
@@ -58,45 +72,52 @@
             </ul>
         </div> <!-- .cd-schedule__timeline -->
         <!-- Your existing code ... -->
-        <div class="cd-schedule__events">
-            <ul id="loadlich">
-                @if (Model.DanhSachThu.Any())
-                {
-                    var selectedWeekStartDate = Model.SelectedWeek.Date;
-                    var selectedWeekEndDate = selectedWeekStartDate.AddDays(6);
-
-                    foreach (var day in Model.DanhSachThu)
+            <div class="cd-schedule__events">
+                <ul id="loadlich">
+                    @if (Model.DanhSachThu.Any())
                     {
-                        <li class="cd-schedule__group">
-                            <div class="cd-schedule__top-info"><span>@day.TenThu</span></div>
-                            <ul>
-                                @foreach (var eventItem in day.ThoiKhoaBieu
-                                .Where(e => e.NgayLamViec.HasValue &&
-                                            e.NgayLamViec.Value.Date >= selectedWeekStartDate &&
-                                            e.NgayLamViec.Value.Date <= selectedWeekEndDate)
-                                .OrderBy(e => e.NgayLamViec))
-                                {
+                        var selectedWeekStartDate = Model.SelectedWeek.Date;
+                        var selectedWeekEndDate = selectedWeekStartDate.AddDays(6);
 
-                                    var uniqueEventId = $"event-{counter}";
-                                    counter++;
-                                    <li class="cd-schedule__event">
-                                        <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="@uniqueEventId">
-                                            <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
-                                            <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
-                                            @if (eventItem.NgayLamViec.HasValue)
-                                            {
-                                                <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.ToString("yyyy-MM-dd")</em>
-                                            }
-                                        </a>
-                                    </li>
-                                }
+                        foreach (var day in Model.DanhSachThu)
+                        {
+                            <li class="cd-schedule__group">
+                                <div class="cd-schedule__top-info"><span>@day.TenThu</span></div>
+                                @{string ThuMau = day.TenThu;}
+                                <ul id="idlich">
 
-                            </ul>
-                        </li>
+                                    @foreach (var eventItem in day.ThoiKhoaBieu
+                                        .Where(e => e.NgayLamViec.HasValue &&
+                                        e.NgayLamViec.Value.Date >= selectedWeekStartDate &&
+                                        e.NgayLamViec.Value.Date <= selectedWeekEndDate &&
+                                        (string.IsNullOrEmpty(ViewBag.fullName) || e.AspNetUsers.FullName == ViewBag.fullName))
+                                        .OrderBy(e => e.NgayLamViec))
+                                    {
+                                        var uniqueEventId = $"event-{counter}";
+                                        counter++;
+                                        var uniqueEventIdDay = $"event-{eday}";
+                                        eday++;
+                                        <li class="cd-schedule__event">
+                                            <a data-start="@eventItem.KhungGio.GioBatDau" data-end="@eventItem.KhungGio.GioKetThuc" data-event="@uniqueEventId" data-content="@uniqueEventIdDay">
+                                                <em class="cd-schedule__name">@eventItem.Phong.TenPhong-@eventItem.KhungGio.TenCa</em>
+                                                <em class="cd-schedule__name">@eventItem.AspNetUsers.FullName</em>
+                                                @if (eventItem.NgayLamViec.HasValue)
+                                                {
+                                                    <em class="cd-schedule__name">@eventItem.NgayLamViec.Value.ToString("yyyy-MM-dd")</em>
+                                                }
+                                            </a>
+                                        </li>
+                                    }
+                                    @{
+                                        eday = 1;
+                                    }
+
+                                </ul>
+                            </li>
+                        }
                     }
-                }
-            </ul>
-        </div>
+                </ul>
+            </div>
     }
     else
     {
@@ -126,8 +147,8 @@
     <div class="cd-schedule__cover-layer"></div>
 </div>
 <!-- Your existing code ... -->
-<script src="~/Areas/assetTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-<script src="~/Areas/assetTKB/js/main.js"></script>
+<script src="~/Areas/NhaSi/assetTKB/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+<script src="~/Areas/NhaSi/assetTKB/js/main.js"></script> <!-- util functions included in the CodyHouse framework -->
 
 
 @section scripts {
